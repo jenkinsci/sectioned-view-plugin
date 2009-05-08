@@ -6,8 +6,10 @@
     </f:entry>
     <f:advanced>
       <f:entry title="${%Jobs}">
+        <j:set var="escapeRegEx" value="\."/>
+        <j:set var="replaceString" value="_"/>
         <j:forEach var="job" items="${app.items}">
-          <f:checkbox name="sections.${job.name}" checked="${instance.contains(job)}" />
+          <f:checkbox name='sections.${job.name.replaceAll(escapeRegEx, replaceString)}' checked="${instance.contains(job)}" />
           ${job.name}
           <br/>
         </j:forEach>

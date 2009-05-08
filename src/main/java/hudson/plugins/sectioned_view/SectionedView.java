@@ -132,10 +132,7 @@ public class SectionedView extends View {
 	}
 
 	@Extension
-	public static class DescriptorImpl extends ViewDescriptor {
-		public DescriptorImpl() {
-			super(SectionedView.class);
-		}
+	public static final class DescriptorImpl extends ViewDescriptor {
 
 		@Override
 		public String getDisplayName() {
