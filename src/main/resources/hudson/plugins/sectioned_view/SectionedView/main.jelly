@@ -1,0 +1,45 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <j:choose xmlns:local="local">
+    <d:taglib uri="local">
+      <d:tag name="viewTabs">
+        <!-- view tab bar -->
+        <l:tabBar>
+          <j:forEach var="v" items="${app.views}">
+            <l:tab name="${v.viewName}" active="${v==it}" href="${rootURL}/${v.url}" />
+          </j:forEach>
+          <j:if test="${it.hasPermission(it.CREATE)}">
+            <l:tab name="+" href="${rootURL}/newView" active="false" />
+          </j:if>
+        </l:tabBar>
+      </d:tag>
+    </d:taglib>
+    <j:when test="${empty(it.sections)}">
+      <j:if test="${!empty(app.items)}">
+        <local:viewTabs/>
+        <br/>
+      </j:if>
+      <st:include page="noJob.jelly" />
+    </j:when>
+    <j:otherwise>
+      <!-- set @jobBaseUrl="" so that links to jobs will be under this view. -->
+      <j:set var="jobBaseUrl" value=""/>
+      <t:setIconSize/>
+      <div class="dashboard">
+        <j:if test="${!empty(it.sections)}">
+          <local:viewTabs/>
+          <!-- project list -->
+          <div class="pane" style="margin-top:0px; border: 1px #bbb solid; border-top: none; border-bottom: none; ">
+            <j:forEach var="section" items="${it.sections}">		  
+              <div style="border-bottom: 1px solid #bbb; padding: 5px;">
+                <st:include from="${section}" page="main.jelly"/>
+                <div style="clear:both;"></div>
+              </div>  
+            </j:forEach>
+          </div>
+          <t:rssBar-with-iconSize/>
+        </j:if>
+      </div>
+    </j:otherwise>
+  </j:choose>
+</j:jelly>

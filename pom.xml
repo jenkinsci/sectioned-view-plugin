@@ -1,0 +1,15 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.303</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  
+  <artifactId>sectioned-view</artifactId>
+  <packaging>hpi</packaging>
+  <name>Hudson Sectioned View Plugin</name>
+  <version>1.0-SNAPSHOT</version>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/Sectioned+View+Plugin</url>
+</project>

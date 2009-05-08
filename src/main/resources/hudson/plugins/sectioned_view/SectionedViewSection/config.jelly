@@ -1,0 +1,17 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <f:nested>
+    <f:entry title="Name">
+      <f:textbox name="sections.name" value="${instance.name}"/>
+    </f:entry>
+    <f:advanced>
+      <f:entry title="${%Jobs}">
+        <j:forEach var="job" items="${app.items}">
+          <f:checkbox name="sections.${job.name}" checked="${instance.contains(job)}" />
+          ${job.name}
+          <br/>
+        </j:forEach>
+      </f:entry>
+    </f:advanced>
+  </f:nested>
+</j:jelly>

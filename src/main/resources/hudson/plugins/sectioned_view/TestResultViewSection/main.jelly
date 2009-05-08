@@ -1,0 +1,33 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:if test="${section.name.length() > 0}">
+  <h2>${section.name}</h2>
+</j:if>
+                <j:if test="${empty(section.items)}">
+                  <p>No jobs in this section.</p>
+                </j:if>
+                <j:forEach var="job" items="${section.items}">
+                  <div style="float: left; margin: 0px 0px 5px 10px;">
+                    <j:set var="jobName" value="${job.displayName}"/>
+                    <h3><a href="${job.shortUrl}">${jobName.length() > 33 ? jobName.substring(0, 15) + "..." + jobName.substring(jobName.length() - 15) : jobName}</a></h3>
+                    <j:set var="tr" value="${job.lastSuccessfulBuild.testResultAction}"/>
+                    <j:choose>
+                      <j:when test="${tr==null}">
+                        <p>No tests results to display.</p>
+                      </j:when>
+                      <j:otherwise>
+                        <p><b>Latest:</b> <t:test-result it="${tr}" /></p>
+                        <j:choose>
+                          <j:when test="${tr.previousResult==null}">
+                            <!-- at least two data points are required for a trend report -->
+                            <p>Not enough runs to display trend.</p>
+                          </j:when>
+                          <j:otherwise>
+                            <img src="${job.shortUrl}test/trend?width=250&amp;height=100" lazymap="${job.shortUrl}test/trendMap?width=250&amp;height=100&amp;rel=${job.shortUrl}" alt="[Test result trend chart]"/>
+                          </j:otherwise>
+                        </j:choose>
+                      </j:otherwise>
+                    </j:choose>
+                  </div>
+                </j:forEach>
+</j:jelly>

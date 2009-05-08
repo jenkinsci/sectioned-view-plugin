@@ -1,0 +1,24 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:if test="${section.name.length() > 0}">
+  <h2>${section.name}</h2>
+</j:if>
+<j:if test="${empty(section.items)}">
+  <p>No jobs in this section.</p>
+</j:if>
+
+<j:invokeStatic var="columnExtensions" className="hudson.model.ListView" method="getDefaultColumns"/>
+<table id="projectstatus" class="pane bigtable">
+  <tr style="border-top: 0px;">
+    <j:forEach var="col" items="${columnExtensions}">
+      <st:include page="columnHeader.jelly" it="${col}" />
+    </j:forEach>
+    <th>
+      <st:nbsp/>
+    </th>
+  </tr>
+  <j:forEach var="job" items="${section.items}">
+    <t:projectViewRow />
+  </j:forEach>
+</table>
+</j:jelly>
