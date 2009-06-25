@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -31,6 +32,16 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     
     private String name;
 
+	/**
+	 * Include regex string.
+	 */
+	String includeRegex;
+
+	/**
+	 * Compiled include pattern from the includeRegex string.
+	 */
+	transient Pattern includePattern;
+
     /**
      * Returns all the registered {@link SectionedViewSection} descriptors.
      */
@@ -46,21 +57,39 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 		this.name = name;
 	}
 
+	public String getIncludeRegex() {
+		return includeRegex;
+	}
+
 	public boolean contains(TopLevelItem item) {
 		return jobNames.contains(item.getName());
 	}
 
-	public Collection<TopLevelItem> getItems() {
-		SortedSet<String> names = new TreeSet<String>();
-		names.addAll(jobNames);
+	protected Object readResolve() {
+		if (includeRegex != null)
+			includePattern = Pattern.compile(includeRegex);
+		return this;
+	}
 
-		List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
-		for (String n : names) {
-			TopLevelItem item = Hudson.getInstance().getItem(n);
-			if (item != null)
-				items.add(item);
-		}
-		return items;
+	public Collection<TopLevelItem> getItems() {
+        SortedSet<String> names = new TreeSet<String>(jobNames);
+
+        if (includePattern != null) {
+            for (TopLevelItem item : Hudson.getInstance().getItems()) {
+                String itemName = item.getName();
+                if (includePattern.matcher(itemName).matches()) {
+                    names.add(itemName);
+                }
+            }
+        }
+
+        List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
+        for (String n : names) {
+            TopLevelItem item = Hudson.getInstance().getItem(n);
+            if(item!=null)
+                items.add(item);
+        }
+        return items;
 	}
 	
     public SectionedViewSectionDescriptor getDescriptor() {
