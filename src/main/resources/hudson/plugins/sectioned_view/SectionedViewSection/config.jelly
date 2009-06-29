@@ -17,8 +17,8 @@
 
       <f:optionalBlock name="sections.useincluderegex" title="${%Use a regular expression to include jobs into the view}"
                    checked="${instance.includeRegex != null}" help="/help/view-config/includeregex.html">
-        <f:entry title="${%Regular expression}">
-          <f:textbox name="sections.includeRegex" value="${instance.includeRegex}" />
+        <f:entry title="${%Regular expression}" field="includeRegex">
+          <f:textbox />
         </f:entry>
       </f:optionalBlock>
       
