@@ -138,22 +138,6 @@ public class SectionedView extends View {
 		public String getDisplayName() {
 			return "Sectioned View";
 		}
-
-		/**
-		 * Checks if the include regular expression is valid.
-		 */
-		public FormValidation doCheckIncludeRegex(@QueryParameter String value)
-				throws IOException, ServletException, InterruptedException {
-			String v = Util.fixEmpty(value);
-			if (v != null) {
-				try {
-					Pattern.compile(v);
-				} catch (PatternSyntaxException pse) {
-					return FormValidation.error(pse.getMessage());
-				}
-			}
-			return FormValidation.ok();
-		}
 	}
 
 	@Override
