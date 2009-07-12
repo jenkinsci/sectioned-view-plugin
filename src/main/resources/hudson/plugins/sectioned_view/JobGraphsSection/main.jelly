@@ -1,4 +1,4 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:sv="/lib/sectioned_view" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
   <j:if test="${section.name.length() > 0}">
     <h2>${section.name}</h2>
   </j:if>
@@ -10,7 +10,9 @@
       <div style="border-left: 1px #bbb solid; border-top: 1px #bbb solid; border-right: 1px #bbb solid; background-color: #eee; margin: 0; padding: 3px;"><b>${job.displayName}</b> (<a href="${job.shortUrl}">view</a>)</div>
       <div style="border: 1px #bbb solid;">
         <j:forEach var="a" items="${job.actions}">
-          <st:include page="sectionFloatingBox.jelly" it="${job}" from="${a}" optional="true" />
+          <div style="float: left;">
+            <sv:graph action="${a}" width="250" height="100" relativeUrl="${job.shortUrl}"/>
+          </div>
         </j:forEach>
         <div style="clear: both;"></div>
       </div>
