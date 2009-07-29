@@ -3,8 +3,8 @@
     <div class="test-trend-caption">
       ${%Compiler Warnings Trend}
     </div>
-    <div>
-      <img src="${relativeUrl}${action.urlName}/trend?width=${width}&amp;height=${height}" lazymap="${relativeUrl}${action.urlName}/trendMap?width=${width}&amp;height=${height}"/>
-    </div>
+    <a href="${relativeUrl}${action.urlName}/">
+      <img src="${relativeUrl}${action.urlName}/trend?width=${width}&amp;height=${height}"/>
+    </a>
   </j:if>
 </j:jelly>
