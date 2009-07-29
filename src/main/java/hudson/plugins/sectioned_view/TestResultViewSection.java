@@ -7,8 +7,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class TestResultViewSection extends SectionedViewSection {
 
     @DataBoundConstructor
-    public TestResultViewSection(String name) {
-        super(name);
+    public TestResultViewSection(String name, Width width, Positioning alignment) {
+        super(name, width, alignment);
     }
 
     @Extension

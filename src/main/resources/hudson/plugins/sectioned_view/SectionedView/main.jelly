@@ -29,13 +29,16 @@
         <j:if test="${!empty(it.sections)}">
           <local:viewTabs/>
           <!-- project list -->
-          <div class="pane" style="margin-top:0px; border: 1px #bbb solid; border-top: none; border-bottom: none; ">
-            <j:forEach var="section" items="${it.sections}">		  
-              <div style="border-bottom: 1px solid #bbb; padding: 5px;">
-                <st:include from="${section}" page="main.jelly"/>
-                <div style="clear:both;"></div>
-              </div>  
+          <div class="pane" style="margin-top:0px; border: 1px #bbb solid; border-top: none;">
+            <j:forEach var="section" items="${it.sections}">
+              <div style="${section.css}">
+                <div style="padding: 5px; overflow: hidden;">
+                  <st:include from="${section}" page="main.jelly"/>
+                  <div style="clear:both;"></div>
+                </div>
+              </div>
             </j:forEach>
+            <div style="clear:both;"></div>
           </div>
           <t:rssBar-with-iconSize/>
         </j:if>

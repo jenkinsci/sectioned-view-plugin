@@ -5,6 +5,12 @@
       <f:textbox name="sections.name" value="${instance.name}"/>
     </f:entry>
     <f:advanced>
+      <f:entry field="alignment" title="${%Align}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
+      <f:entry field="width" title="${%Width}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
       <f:entry title="${%Jobs}">
         <j:set var="escapeRegEx" value="\."/>
         <j:set var="replaceString" value="_"/>

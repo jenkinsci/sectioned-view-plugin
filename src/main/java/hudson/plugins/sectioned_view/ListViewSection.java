@@ -7,8 +7,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class ListViewSection extends SectionedViewSection {
 
     @DataBoundConstructor
-    public ListViewSection(String name) {
-        super(name);
+    public ListViewSection(String name, Width width, Positioning alignment) {
+        super(name, width, alignment);
     }
 
     @Extension

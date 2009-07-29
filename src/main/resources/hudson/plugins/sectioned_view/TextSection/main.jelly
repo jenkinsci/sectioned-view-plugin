@@ -1,0 +1,11 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:if test="${section.name.length() > 0}">
+  <h2>${section.name}</h2>
+</j:if>
+<table style="border: none; margin: 0; padding: 0;">
+  <tr>
+    <td>${section.text}</td>
+  </tr>
+</table>
+</j:jelly>
