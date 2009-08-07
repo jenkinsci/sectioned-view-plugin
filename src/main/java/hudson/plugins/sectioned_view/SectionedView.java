@@ -1,7 +1,6 @@
 package hudson.plugins.sectioned_view;
 
 import hudson.Extension;
-import hudson.Util;
 import hudson.model.Descriptor;
 import hudson.model.HealthReport;
 import hudson.model.Hudson;
@@ -15,7 +14,6 @@ import hudson.model.View;
 import hudson.model.ViewDescriptor;
 import hudson.model.Descriptor.FormException;
 import hudson.util.DescribableList;
-import hudson.util.FormValidation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,13 +22,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 import javax.servlet.ServletException;
 
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
