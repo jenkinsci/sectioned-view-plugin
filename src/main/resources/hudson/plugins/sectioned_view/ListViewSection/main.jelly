@@ -7,7 +7,7 @@
   <p>No jobs in this section.</p>
 </j:if>
 
-<j:invokeStatic var="columnExtensions" className="hudson.model.ListView" method="getDefaultColumns"/>
+<j:set var="columnExtensions" value="${section.columns}"/>
 <table id="projectstatus" class="pane bigtable">
   <tr style="border-top: 0px;">
     <j:forEach var="col" items="${columnExtensions}">

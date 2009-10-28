@@ -10,7 +10,8 @@
                      descriptors="${allSections}"
                      items="${it.sections}"
                      targetType="${it.class}"
-                     addCaption="Add Section"/>
+                     addCaption="${%Add Section}"
+                     deleteCaption="${%Delete section}"/>
     </f:block>
   </f:section>
 
