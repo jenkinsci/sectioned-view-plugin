@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.318</version>
+    <version>1.330</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   
@@ -12,4 +12,11 @@
   <name>Hudson Sectioned View Plugin</name>
   <version>1.5-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Sectioned+View+Plugin</url>
+  <developers>
+  	<developer>
+  		<id>tbingaman</id>
+  		<name>Timothy Bingaman</name>
+  		<email>timothy.bingaman@gmail.com</email>
+  	</developer>
+  </developers>
 </project>
