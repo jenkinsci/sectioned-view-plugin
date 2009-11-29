@@ -154,17 +154,12 @@ public class SectionedView extends View {
 	@Override
 	public Collection<TopLevelItem> getItems() {
 		SortedSet<String> names = new TreeSet<String>();
+		List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
 
 		for (SectionedViewSection section : sections) {
-			names.addAll(section.jobNames);
+		    items.addAll(section.getItems());
 		}
 
-		List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
-		for (String n : names) {
-			TopLevelItem item = Hudson.getInstance().getItem(n);
-			if (item != null)
-				items.add(item);
-		}
 		return items;
 	}
 
