@@ -35,13 +35,13 @@ public class ListViewSection extends SectionedViewSection {
 
     // First add all the known instances in the correct order:
     private static final Descriptor [] defaultColumnDescriptors  =  {
-        StatusColumn.DESCRIPTOR,
-        WeatherColumn.DESCRIPTOR,
-        JobColumn.DESCRIPTOR,
-        LastSuccessColumn.DESCRIPTOR,
-        LastFailureColumn.DESCRIPTOR,
-        LastDurationColumn.DESCRIPTOR,
-        BuildButtonColumn.DESCRIPTOR
+        new StatusColumn().getDescriptor(),
+        new WeatherColumn().getDescriptor(),
+        new JobColumn().getDescriptor(),
+        new LastSuccessColumn().getDescriptor(),
+        new LastFailureColumn().getDescriptor(),
+        new LastDurationColumn().getDescriptor(),
+        new BuildButtonColumn().getDescriptor()
     };
 
     @DataBoundConstructor
