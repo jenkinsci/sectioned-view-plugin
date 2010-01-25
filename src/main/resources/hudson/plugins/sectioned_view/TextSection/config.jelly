@@ -11,6 +11,9 @@
       <f:entry field="width" title="${%Width}">
         <f:enum>${it.description}</f:enum>
       </f:entry>
+      <f:entry field="style" title="${%Style}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
       <f:entry field="text" title="${%Text}">
         <f:textarea/>
       </f:entry>
