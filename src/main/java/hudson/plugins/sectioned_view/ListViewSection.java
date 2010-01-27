@@ -1,13 +1,5 @@
 package hudson.plugins.sectioned_view;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import hudson.DescriptorExtensionList;
 import hudson.Extension;
 import hudson.model.Descriptor;
@@ -24,6 +16,13 @@ import hudson.views.ListViewColumn;
 import hudson.views.StatusColumn;
 import hudson.views.WeatherColumn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -33,90 +32,30 @@ public class ListViewSection extends SectionedViewSection {
 
     private DescribableList<ListViewColumn, Descriptor<ListViewColumn>> columns;
 
-    // First add all the known instances in the correct order:
-    private static final Descriptor [] defaultColumnDescriptors  =  {
-        new StatusColumn().getDescriptor(),
-        new WeatherColumn().getDescriptor(),
-        new JobColumn().getDescriptor(),
-        new LastSuccessColumn().getDescriptor(),
-        new LastFailureColumn().getDescriptor(),
-        new LastDurationColumn().getDescriptor(),
-        new BuildButtonColumn().getDescriptor()
-    };
-
     @DataBoundConstructor
     public ListViewSection(String name, Width width, Positioning alignment) {
         super(name, width, alignment);
-        initColumns();
-    }
-
-    protected Object readResolve() {
-        super.readResolve();
-        initColumns();
-        return this;
-    }
-
-    protected void initColumns() {
-        if (columns != null) {
-            // already persisted
-            return;
-        }
-        // OK, set up default list of columns:
-        // create all instances
-        ArrayList<ListViewColumn> r = new ArrayList<ListViewColumn>();
-        DescriptorExtensionList<ListViewColumn, Descriptor<ListViewColumn>> all = ListViewColumn.all();
-        ArrayList<Descriptor<ListViewColumn>> left = new ArrayList<Descriptor<ListViewColumn>>();
-        left.addAll(all);
-        for (Descriptor d: defaultColumnDescriptors) {
-            Descriptor<ListViewColumn> des = all.find(d.getClass().getName());
-            if (des  != null) {
-                try {
-                    r.add (des.newInstance(null, null));
-                   left.remove(des);
-                } catch (FormException e) {
-                    // so far impossible. TODO: report
-                }
-                
-            }
-        }
-        for (Descriptor<ListViewColumn> d : left)
-            try {
-                r.add(d.newInstance(null,null));
-            } catch (FormException e) {
-                // so far impossible. TODO: report
-            }
-        Iterator<ListViewColumn> filter = r.iterator();
-        while (filter.hasNext()) {
-            if (!filter.next().shownByDefault()) {
-                filter.remove();
-            }
-        }
-        columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
-        try {
-            columns.replaceBy(r);
-        } catch (IOException ex) {
-            Logger.getLogger(ListViewSection.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public Iterable<ListViewColumn> getColumns() {
         return columns;
     }
-    
+
     public static List<ListViewColumn> getDefaultColumns() {
         ArrayList<ListViewColumn> r = new ArrayList<ListViewColumn>();
         DescriptorExtensionList<ListViewColumn, Descriptor<ListViewColumn>> all = ListViewColumn.all();
-        for (Descriptor d: defaultColumnDescriptors) {
-            Descriptor<ListViewColumn> des = all.find(d.getClass().getName());
+
+        for (Class<? extends ListViewColumn> d: DEFAULT_COLUMNS) {
+            Descriptor<ListViewColumn> des = all.find(d);
             if (des  != null) {
                 try {
-                    r.add (des.newInstance(null, null));
+                    r.add(des.newInstance(null, null));
                 } catch (FormException e) {
-                    // so far impossible. TODO: report
+                    LOGGER.log(Level.WARNING, "Failed to instantiate "+des.clazz,e);
                 }
-                
             }
         }
+
         return Collections.unmodifiableList(r);
     }
 
@@ -131,7 +70,7 @@ public class ListViewSection extends SectionedViewSection {
                 section.columns = new DescribableList<ListViewColumn,Descriptor<ListViewColumn>>(Saveable.NOOP);
             }
             section.columns.rebuildHetero(req, formData, Hudson.getInstance().getDescriptorList(ListViewColumn.class), "columns");
-            
+
             return section;
         }
 
@@ -140,4 +79,19 @@ public class ListViewSection extends SectionedViewSection {
             return "List View Section";
         }
     }
+
+    private static final Logger LOGGER = Logger.getLogger(ListViewSection.class.getName());
+
+    /**
+     * Traditional column layout before the {@link ListViewColumn} becomes extensible.
+     */
+    private static final List<Class<? extends ListViewColumn>> DEFAULT_COLUMNS =  Arrays.asList(
+        StatusColumn.class,
+        WeatherColumn.class,
+        JobColumn.class,
+        LastSuccessColumn.class,
+        LastFailureColumn.class,
+        LastDurationColumn.class,
+        BuildButtonColumn.class
+    );
 }

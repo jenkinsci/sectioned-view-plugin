@@ -29,10 +29,11 @@
 
       <f:section title="${%Columns}">
         <j:invokeStatic var="allColumns" className="hudson.views.ListViewColumn" method="all"/>
+        <j:invokeStatic var="defaultColumns" className="hudson.plugins.sectioned_view.ListViewSection" method="getDefaultColumns"/>
         <f:block>
           <f:hetero-list name="columns" hasHeader="true"
                          descriptors="${allColumns}"
-                         items="${instance.columns}"
+                         items="${instance==null?defaultColumns:instance.columns}"
                          addCaption="${%Add column}"
                          deleteCaption="${%Remove column}"/>
         </f:block>

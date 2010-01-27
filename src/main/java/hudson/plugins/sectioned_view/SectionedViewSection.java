@@ -1,5 +1,13 @@
 package hudson.plugins.sectioned_view;
 
+import hudson.DescriptorExtensionList;
+import hudson.ExtensionPoint;
+import hudson.model.Describable;
+import hudson.model.Hudson;
+import hudson.model.TopLevelItem;
+import hudson.util.CaseInsensitiveComparator;
+import hudson.util.EnumConverter;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -7,21 +15,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.Stapler;
-
-import hudson.DescriptorExtensionList;
-import hudson.Extension;
-import hudson.ExtensionPoint;
-import hudson.model.Describable;
-import hudson.model.Descriptor;
-import hudson.model.Hudson;
-import hudson.model.Messages;
-import hudson.model.TopLevelItem;
-import hudson.model.Node.Mode;
-import hudson.util.CaseInsensitiveComparator;
-import hudson.util.DescriptorList;
-import hudson.util.EnumConverter;
 
 public abstract class SectionedViewSection implements ExtensionPoint, Describable<SectionedViewSection> {
 
@@ -31,12 +25,12 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.alignment = alignment;
         determineCss();
     }
-    
+
     /**
      * List of job names. This is what gets serialized.
      */
     /*package*/ final SortedSet<String> jobNames = new TreeSet<String>(CaseInsensitiveComparator.INSTANCE);
-    
+
     private String name;
 
 	/**
@@ -48,11 +42,11 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 	 * Compiled include pattern from the includeRegex string.
 	 */
 	transient Pattern includePattern;
-	
+
 	private Width width;
-	
+
 	private Positioning alignment;
-	
+
 	transient String css;
 
     /**
@@ -139,7 +133,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         }
         return items;
 	}
-	
+
     public SectionedViewSectionDescriptor getDescriptor() {
         return (SectionedViewSectionDescriptor)Hudson.getInstance().getDescriptor(getClass());
     }
@@ -194,7 +188,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         private final String description;
 
         private final String css;
-        
+
         private final int percent;
 
         public String getDescription() {
@@ -204,7 +198,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         public String getCss() {
             return css;
         }
-        
+
         public int getPercent() {
             return percent;
         }
