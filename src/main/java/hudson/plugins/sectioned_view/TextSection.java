@@ -2,7 +2,6 @@ package hudson.plugins.sectioned_view;
 
 import hudson.Extension;
 import hudson.util.EnumConverter;
-
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -10,9 +9,9 @@ import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
 
 public class TextSection extends SectionedViewSection {
-    
+
     private String text;
-    
+
     private Style style;
 
     /**
@@ -41,7 +40,7 @@ public class TextSection extends SectionedViewSection {
     public Style getStyle() {
         return style;
     }
-    
+
     public boolean hasStyle() {
         return style != Style.NONE;
     }
@@ -67,7 +66,8 @@ public class TextSection extends SectionedViewSection {
         NONE("None", ""),
         NOTE("Note", "sectioned-view-note"),
         INFO("Info", "sectioned-view-info"),
-        WARN("Warning", "sectioned-view-warning");
+        WARN("Warning", "sectioned-view-warning"),
+        TIP("Tip", "sectioned-view-tip");
 
         private final String description;
 
