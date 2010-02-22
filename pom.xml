@@ -10,7 +10,7 @@
   <artifactId>sectioned-view</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson Sectioned View Plugin</name>
-  <version>1.10-SNAPSHOT</version>
+  <version>1.9-SNAPSHOT</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Sectioned+View+Plugin</url>
   <developers>
     <developer>
