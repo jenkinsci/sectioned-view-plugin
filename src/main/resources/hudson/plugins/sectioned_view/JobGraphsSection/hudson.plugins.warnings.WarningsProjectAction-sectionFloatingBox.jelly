@@ -4,7 +4,7 @@
       ${%Compiler Warnings Trend}
     </div>
     <a href="${relativeUrl}${action.urlName}/">
-      <img src="${relativeUrl}${action.urlName}/trend?width=${width}&amp;height=${height}"/>
+      <img src="${relativeUrl}${action.urlName}/trendGraph/png?width=${width}&amp;height=${height}"/>
     </a>
   </j:if>
 </j:jelly>
