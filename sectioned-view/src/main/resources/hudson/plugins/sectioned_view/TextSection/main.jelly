@@ -1,0 +1,18 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+<j:if test="${section.name.length() > 0 and !section.hasStyle()}">
+  <h2>${section.name}</h2>
+</j:if>
+<table style="border: none; margin: 0; padding: 0;">
+  <tr>
+    <td>
+      <div class="${section.style.cssClass}">
+        <j:if test="${section.name.length() > 0 and section.hasStyle()}">
+          <h3>${section.name}</h3>
+        </j:if>
+        <div>${section.text}</div>
+      </div>
+    </td>
+  </tr>
+</table>
+</j:jelly>

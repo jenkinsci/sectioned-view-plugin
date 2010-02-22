@@ -1,0 +1,31 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <f:entry title="Name" field="name">
+      <f:textbox />
+    </f:entry>
+    <f:advanced>
+      <f:entry field="alignment" title="${%Align}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
+      <f:entry field="width" title="${%Width}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
+      <f:entry title="${%Jobs}">
+        <j:set var="escapeRegEx" value="\."/>
+        <j:set var="replaceString" value="_"/>
+        <j:forEach var="job" items="${app.items}">
+          <f:checkbox name='sections.${job.name.replaceAll(escapeRegEx, replaceString)}' checked="${instance.contains(job)}" />
+          ${job.name}
+          <br/>
+        </j:forEach>
+      </f:entry>
+
+      <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
+                   checked="${instance.includeRegex != null}" help="/help/view-config/includeregex.html">
+        <f:entry title="${%Regular expression}" field="includeRegex">
+          <f:textbox />
+        </f:entry>
+      </f:optionalBlock>
+      
+    </f:advanced>
+</j:jelly>
