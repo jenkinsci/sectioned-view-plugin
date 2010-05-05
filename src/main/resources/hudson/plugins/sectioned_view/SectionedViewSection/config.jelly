@@ -15,7 +15,7 @@
         <j:set var="replaceString" value="_"/>
         <j:forEach var="job" items="${app.items}">
           <f:checkbox name='sections.${job.name.replaceAll(escapeRegEx, replaceString)}' checked="${instance.contains(job)}" />
-          ${job.name}
+          <label class="attach-previous">${job.name}</label>
           <br/>
         </j:forEach>
       </f:entry>
