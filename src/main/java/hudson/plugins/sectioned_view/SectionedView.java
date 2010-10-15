@@ -121,9 +121,13 @@ public class SectionedView extends View {
 			sections = new DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>>(
 					Saveable.NOOP);
 		}
-		sections.rebuildHetero(req, req.getSubmittedForm(), Hudson
-				.getInstance().getDescriptorList(SectionedViewSection.class),
-				"sections");
+		try {
+            sections.rebuildHetero(req, req.getSubmittedForm(), Hudson
+            		.getInstance().getDescriptorList(SectionedViewSection.class),
+            		"sections");
+        } catch (IOException e) {
+            throw new FormException("Error rebuilding list of sections.", e, "sections");
+        }
 	}
 
 	@Extension

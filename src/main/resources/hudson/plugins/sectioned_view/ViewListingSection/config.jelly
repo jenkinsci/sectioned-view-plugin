@@ -1,0 +1,55 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:local="local">
+  <d:taglib uri="local">
+    <d:tag name="add-children">
+      <j:forEach var="view" items="${views}">
+        <j:set var="viewName" value="${prefix == ''?'':prefix+'$'}${view.viewName}"/>
+        views['${viewName}'] = new YAHOO.widget.TextNode('&lt;input type="checkbox" name="views" json="${viewName}" '+has("${viewName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(view.viewName)}&lt;/label&gt;', ${parentView}, false);
+        <j:if test="${view.views != null}">
+          <local:add-children parentView="views['${viewName}']" views="${view.views}" prefix="${viewName}"/>
+        </j:if>
+      </j:forEach>
+    </d:tag>
+  </d:taglib>
+
+  <f:nested>
+    <f:entry title="Name">
+      <f:textbox name="sections.name" value="${instance.name}"/>
+    </f:entry>
+    <f:entry title="${%Views}" field="views">
+      <div class="yahooTree views-tree" style="border: 1px solid gray; height: 10em; overflow:auto;" values="${instance.viewsString}" />
+      <script>
+        hudsonRules["DIV.views-tree"] = function(e) {
+          var tree = new YAHOO.widget.TreeView(e);
+          var root = tree.getRoot();
+
+          var values = (e.getAttribute("values") || "").split(",");
+          function has(v) {
+            return values.include(v) ? 'checked="checked" ' : "";
+          }
+          var views = {};
+          <local:add-children parentView="root" views="${app.views}" prefix=""/>
+
+          tree.draw();
+          <!--
+            force the rendering of HTML, so that input fields are there
+            even when the form is submitted without this tree expanded.
+          -->
+          tree.expandAll();
+          tree.collapseAll();
+        };
+      </script>
+    </f:entry>
+    <f:advanced>
+      <f:entry field="alignment" title="${%Align}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
+      <f:entry field="width" title="${%Width}">
+        <f:enum>${it.description}</f:enum>
+      </f:entry>
+      <f:entry field="columns" title="${%Columns}">
+        <f:textbox/>
+      </f:entry>
+    </f:advanced>
+  </f:nested>
+</j:jelly>

@@ -16,6 +16,7 @@ import hudson.views.ListViewColumn;
 import hudson.views.StatusColumn;
 import hudson.views.WeatherColumn;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,7 +70,11 @@ public class ListViewSection extends SectionedViewSection {
             if (section.columns == null) {
                 section.columns = new DescribableList<ListViewColumn,Descriptor<ListViewColumn>>(Saveable.NOOP);
             }
-            section.columns.rebuildHetero(req, formData, Hudson.getInstance().getDescriptorList(ListViewColumn.class), "columns");
+            try {
+                section.columns.rebuildHetero(req, formData, Hudson.getInstance().getDescriptorList(ListViewColumn.class), "columns");
+            } catch (IOException e) {
+                throw new FormException("Error rebuilding list of columns.", e, "columns");
+            }
 
             return section;
         }

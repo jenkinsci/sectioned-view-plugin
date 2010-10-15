@@ -1,0 +1,38 @@
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:local="local">
+  <d:taglib uri="local">
+    <d:tag name="list-sub-views">
+      <j:if test="${subViews.size() > 0}">
+        <ul>
+          <j:forEach var="view" items="${subViews}">
+            <li><a href="${rootURL}/${view.viewUrl}">${view.viewName}</a><j:if test="${view.views != null}"><local:list-sub-views subViews="${view.views}"/></j:if></li>
+          </j:forEach>
+        </ul>
+      </j:if>
+    </d:tag>
+  </d:taglib>
+  
+  <j:if test="${section.name.length() > 0}">
+    <h2>${section.name}</h2>
+  </j:if>
+  <div>
+    <table>
+      <tr>
+        <j:forEach var="viewColumn" items="${section.nestedViewColumns}">
+          <td>
+            <j:forEach var="view" items="${viewColumn}">
+              <div class="sectioned-view-panel">
+                <div class="sectioned-view-panel-header"><h4><a href="${rootURL}/${view.viewUrl}">${view.viewName}</a></h4></div>
+                <j:if test="${view.views != null}">
+                  <div class="sectioned-view-panel-content">
+                    <local:list-sub-views subViews="${view.views}"/>
+                  </div>
+                </j:if>
+              </div>
+            </j:forEach>
+          </td>
+        </j:forEach>
+      </tr>
+    </table>
+  </div>
+</j:jelly>
