@@ -48,7 +48,7 @@
         <f:enum>${it.description}</f:enum>
       </f:entry>
       <f:entry field="columns" title="${%Columns}">
-        <f:textbox/>
+        <f:textbox default="1"/>
       </f:entry>
     </f:advanced>
   </f:nested>
