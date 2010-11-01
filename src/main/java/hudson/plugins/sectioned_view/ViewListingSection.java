@@ -103,7 +103,7 @@ public class ViewListingSection extends SectionedViewSection {
         }
         
         public FormValidation doCheckColumns(@QueryParameter String value) {
-            if (StringUtils.isNumeric(value)) {
+            if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
                 int columns = Integer.parseInt(value);
                 if (columns > 0) return FormValidation.ok();
             }
