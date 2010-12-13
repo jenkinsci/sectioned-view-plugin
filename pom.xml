@@ -10,7 +10,7 @@
   <artifactId>sectioned-view</artifactId>
   <packaging>hpi</packaging>
   <name>Hudson Sectioned View Plugin</name>
-  <version>1.13-SNAPSHOT</version>
+  <version>1.13</version>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Sectioned+View+Plugin</url>
   <developers>
     <developer>
@@ -19,4 +19,10 @@
       <email>timothy.bingaman@gmail.com</email>
     </developer>
   </developers>
+
+  <scm>
+    <connection>scm:svn:https://guest@svn.java.net/svn/hudson~svn/tags/sectioned-view-1.13</connection>
+    <developerConnection>scm:svn:https://svn.java.net/svn/hudson~svn/tags/sectioned-view-1.13</developerConnection>
+    <url>https://svn.java.net/svn/hudson~svn/tags/sectioned-view-1.13</url>
+  </scm>
 </project>
