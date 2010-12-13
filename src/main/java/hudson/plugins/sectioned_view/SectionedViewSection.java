@@ -3,10 +3,14 @@ package hudson.plugins.sectioned_view;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.model.Describable;
+import hudson.model.Descriptor;
 import hudson.model.Hudson;
+import hudson.model.Saveable;
 import hudson.model.TopLevelItem;
 import hudson.util.CaseInsensitiveComparator;
+import hudson.util.DescribableList;
 import hudson.util.EnumConverter;
+import hudson.views.ViewJobFilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,12 +28,14 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.width = width;
         this.alignment = alignment;
         determineCss();
+        initJobFilters();
     }
 
     /**
      * List of job names. This is what gets serialized.
      */
     /*package*/ final SortedSet<String> jobNames = new TreeSet<String>(CaseInsensitiveComparator.INSTANCE);
+    /*package*/ DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>> jobFilters;
 
     private String name;
 
@@ -67,6 +73,14 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 	public String getIncludeRegex() {
 		return includeRegex;
 	}
+    
+    public Iterable<ViewJobFilter> getJobFilters() {
+        return jobFilters;
+    }
+
+    public boolean hasJobFilterExtensions() {
+        return !ViewJobFilter.all().isEmpty();
+    }
 
 	public Width getWidth() {
         return width;
@@ -96,6 +110,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 		if (alignment == null)
 		    alignment = Positioning.CENTER;
 		determineCss();
+        initJobFilters();
 		return this;
 	}
 
@@ -131,8 +146,23 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
             if(item!=null)
                 items.add(item);
         }
+
+        // check the filters
+        Iterable<ViewJobFilter> jobFilters = getJobFilters();
+        List<TopLevelItem> allItems = Hudson.getInstance().getItems();
+        for (ViewJobFilter jobFilter: jobFilters) {
+            items = jobFilter.filter(items, allItems, null);
+        }
         return items;
 	}
+    
+    protected void initJobFilters() {
+        if (jobFilters != null) {
+            return;
+        }
+        ArrayList<ViewJobFilter> r = new ArrayList<ViewJobFilter>();
+        jobFilters = new DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>>(Saveable.NOOP, r);
+    }
 
     public SectionedViewSectionDescriptor getDescriptor() {
         return (SectionedViewSectionDescriptor)Hudson.getInstance().getDescriptor(getClass());

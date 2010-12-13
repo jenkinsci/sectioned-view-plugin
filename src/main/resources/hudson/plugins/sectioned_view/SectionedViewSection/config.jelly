@@ -20,6 +20,16 @@
         </j:forEach>
       </f:entry>
 
+	  <j:if test="${instance.hasJobFilterExtensions()}">
+	   <j:invokeStatic var="allJobFilters" className="hudson.views.ViewJobFilter" method="all"/>
+	   <f:block>
+	      <f:hetero-list name="jobFilters" hasHeader="true"
+	      	descriptors="${allJobFilters}"
+	        items="${instance.jobFilters}"
+	        addCaption="${%Add Job Filter}" />
+	   </f:block>
+	  </j:if>
+
       <f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
                    checked="${instance.includeRegex != null}" help="/help/view-config/includeregex.html">
         <f:entry title="${%Regular expression}" field="includeRegex">

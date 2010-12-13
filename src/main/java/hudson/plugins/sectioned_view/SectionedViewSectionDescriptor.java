@@ -14,8 +14,11 @@ import org.kohsuke.stapler.StaplerRequest;
 import hudson.Util;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
+import hudson.model.Saveable;
 import hudson.model.TopLevelItem;
+import hudson.util.DescribableList;
 import hudson.util.FormValidation;
+import hudson.views.ViewJobFilter;
 
 public abstract class SectionedViewSectionDescriptor extends Descriptor<SectionedViewSection> {
 
@@ -49,6 +52,16 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
 			if (formData.containsKey(escapedName) && formData.getBoolean(escapedName))
 				section.jobNames.add(item.getName());
 		}
+
+        if (section.jobFilters == null) {
+            section.jobFilters = new DescribableList<ViewJobFilter,Descriptor<ViewJobFilter>>(Saveable.NOOP);
+        }
+        try {
+            section.jobFilters.rebuildHetero(req, formData, ViewJobFilter.all(), "jobFilters");
+        } catch (IOException e) {
+            throw new FormException("Error rebuilding list of view job filters.", e, "jobFilters");
+        }
+        
 		return section;
 	}
 
