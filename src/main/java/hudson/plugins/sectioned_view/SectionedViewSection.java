@@ -59,7 +59,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
      * Returns all the registered {@link SectionedViewSection} descriptors.
      */
     public static DescriptorExtensionList<SectionedViewSection, SectionedViewSectionDescriptor> all() {
-    	return Hudson.getInstance().getDescriptorList(SectionedViewSection.class);
+    	return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
     }
 
 	public String getName() {

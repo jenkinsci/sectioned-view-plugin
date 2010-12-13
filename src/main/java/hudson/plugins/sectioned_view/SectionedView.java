@@ -123,7 +123,7 @@ public class SectionedView extends View {
 		}
 		try {
             sections.rebuildHetero(req, req.getSubmittedForm(), Hudson
-            		.getInstance().getDescriptorList(SectionedViewSection.class),
+            		.getInstance().<SectionedViewSection, Descriptor<SectionedViewSection>>getDescriptorList(SectionedViewSection.class),
             		"sections");
         } catch (IOException e) {
             throw new FormException("Error rebuilding list of sections.", e, "sections");

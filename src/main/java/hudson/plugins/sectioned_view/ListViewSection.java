@@ -71,7 +71,7 @@ public class ListViewSection extends SectionedViewSection {
                 section.columns = new DescribableList<ListViewColumn,Descriptor<ListViewColumn>>(Saveable.NOOP);
             }
             try {
-                section.columns.rebuildHetero(req, formData, Hudson.getInstance().getDescriptorList(ListViewColumn.class), "columns");
+                section.columns.rebuildHetero(req, formData, Hudson.getInstance().<ListViewColumn,Descriptor<ListViewColumn>>getDescriptorList(ListViewColumn.class), "columns");
             } catch (IOException e) {
                 throw new FormException("Error rebuilding list of columns.", e, "columns");
             }
@@ -90,6 +90,7 @@ public class ListViewSection extends SectionedViewSection {
     /**
      * Traditional column layout before the {@link ListViewColumn} becomes extensible.
      */
+    @SuppressWarnings("unchecked")
     private static final List<Class<? extends ListViewColumn>> DEFAULT_COLUMNS =  Arrays.asList(
         StatusColumn.class,
         WeatherColumn.class,
