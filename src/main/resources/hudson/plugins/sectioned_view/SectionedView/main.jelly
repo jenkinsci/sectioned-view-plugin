@@ -1,23 +1,11 @@
 
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <j:choose xmlns:local="local">
-    <d:taglib uri="local">
-      <d:tag name="viewTabs">
-        <!-- view tab bar -->
-        <l:tabBar>
-          <j:forEach var="v" items="${it.owner.views}">
-            <l:tab name="${v.viewName}" active="${v==it}" href="${rootURL}/${v.url}" />
-          </j:forEach>
-          <j:if test="${it.hasPermission(it.CREATE)}">
-            <l:tab name="+" href="${rootURL}/${it.owner.url}newView" active="false" />
-          </j:if>
-        </l:tabBar>
-      </d:tag>
-    </d:taglib>
+  <j:choose>
     <j:when test="${empty(it.sections)}">
       <j:if test="${!empty(app.items)}">
-        <local:viewTabs/>
-        <br/>
+        <j:set var="views" value="${it.owner.views}"/>
+        <j:set var="currentView" value="${it}"/>
+        <st:include page="viewTabs.jelly" it="${it.owner.viewsTabBar}"/>
       </j:if>
       <st:include page="noJob.jelly" />
     </j:when>
@@ -27,7 +15,16 @@
       <t:setIconSize/>
       <div class="dashboard">
         <j:if test="${!empty(it.sections)}">
-          <local:viewTabs/>
+          <j:set var="views" value="${it.owner.views}"/>
+          <j:set var="currentView" value="${it}"/>
+          <j:choose>
+            <j:when test="${it.owner.class.name=='hudson.model.MyViewsProperty'}">
+              <st:include page="myViewTabs.jelly" it="${it.owner.myViewsTabBar}"/>
+            </j:when>
+            <j:otherwise>
+              <st:include page="viewTabs.jelly" it="${it.owner.viewsTabBar}"/>
+            </j:otherwise>
+          </j:choose>
           <!-- project list -->
           <div class="pane" style="margin-top:0px; border: 1px #bbb solid; border-top: none;">
             <j:forEach var="section" items="${it.sections}">
