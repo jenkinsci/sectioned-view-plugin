@@ -1,1 +1,1 @@
-Source now lives in git https://github.com/hudson/sectioned-view-plugin
+Source now lives in git https://github.com/jenkinsci/sectioned-view-plugin
