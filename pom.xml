@@ -29,8 +29,8 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git://github.com/jenkinsci/sectioned-view-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/sectioned-view-plugin.git</developerConnection>
+    <connection>scm:git:https://github.com/jenkinsci/sectioned-view-plugin.git</connection>
+    <developerConnection>scm:git:https://git@github.com/jenkinsci/sectioned-view-plugin.git</developerConnection>
     <url>http://github.com/jenkinsci/sectioned-view-plugin</url>
   </scm>
 
