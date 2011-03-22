@@ -64,6 +64,8 @@ public class ViewListingSection extends SectionedViewSection {
      * Used for generating the config UI.
      */
     public String getViewsString() {
+        if (views == null || views.isEmpty()) return "";
+        
         char delim = ',';
         // Build string connected with delimiter, quoting as needed
         StringBuilder buf = new StringBuilder();
@@ -85,6 +87,9 @@ public class ViewListingSection extends SectionedViewSection {
         for (int i = 0; i < columns; i++) {
             nestedViewColumns.add(new ArrayList<View>());
         }
+        
+        if (views == null || views.isEmpty()) return nestedViewColumns;
+        
         int column = 0;
         for (String viewName : views) {
             String[] viewComponents = viewName.split("\\$");
