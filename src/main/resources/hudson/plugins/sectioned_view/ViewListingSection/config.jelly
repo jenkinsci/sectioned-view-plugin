@@ -27,7 +27,7 @@ THE SOFTWARE.
     <d:tag name="add-children">
       <j:forEach var="view" items="${views}">
         <j:set var="viewName" value="${prefix == ''?'':prefix+'$'}${view.viewName}"/>
-        views['${viewName}'] = new YAHOO.widget.TextNode('&lt;input type="checkbox" name="views" json="${viewName}" '+has("${viewName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(view.viewName)}&lt;/label&gt;', ${parentView}, false);
+        views['${viewName}'] = new YAHOO.widget.HTMLNode('&lt;input type="checkbox" name="views" json="${viewName}" '+has("${viewName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(view.viewName)}&lt;/label&gt;', ${parentView}, false);
         <j:if test="${view.views != null}">
           <local:add-children parentView="views['${viewName}']" views="${view.views}" prefix="${viewName}"/>
         </j:if>
@@ -60,6 +60,16 @@ THE SOFTWARE.
           -->
           tree.expandAll();
           tree.collapseAll();
+
+          <!--
+            cancel the event.
+
+            from http://yuilibrary.com/forum/viewtopic.php?f=89&t=8209&p=26239&hilit=HTMLNode#p26239
+            "To prevent toggling and allow the link to work, add a listener to the clickEvent on that tree and simply return false"
+          -->
+          tree.subscribe("clickEvent", function(node) {
+              return false;
+          });
         };
       </script>
     </f:entry>
