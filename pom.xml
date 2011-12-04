@@ -10,7 +10,7 @@
   <artifactId>sectioned-view</artifactId>
   <packaging>hpi</packaging>
   <name>Sectioned View Plugin</name>
-  <version>1.16-SNAPSHOT</version>
+  <version>1.16</version>
   <url>http://wiki.jenkins-ci.org/display/JENKINS/Sectioned+View+Plugin</url>
   <developers>
     <developer>
