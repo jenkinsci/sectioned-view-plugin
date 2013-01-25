@@ -34,6 +34,7 @@ import hudson.util.CaseInsensitiveComparator;
 import hudson.util.DescribableList;
 import hudson.util.EnumConverter;
 import hudson.views.ViewJobFilter;
+import hudson.Util;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -96,7 +97,16 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 	public String getIncludeRegex() {
 		return includeRegex;
 	}
-    
+
+    public void setIncludeRegex(String includeRegex) {
+        String newRegex = Util.fixEmptyAndTrim(includeRegex);
+        if (this.includeRegex != newRegex)
+        {
+            this.includeRegex = newRegex;
+            this.includePattern = ( this.includeRegex == null ? null : Pattern.compile(this.includeRegex) );
+        }
+    }
+
     public Iterable<ViewJobFilter> getJobFilters() {
         return jobFilters;
     }
@@ -121,9 +131,21 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.alignment = alignment;
     }
 
+    public void add(TopLevelItem item) {
+        jobNames.add(item.getName());
+    }
+
     public boolean contains(TopLevelItem item) {
 		return jobNames.contains(item.getName());
 	}
+
+    public void remove(TopLevelItem item) {
+        jobNames.remove(item.getName());
+    }
+
+    public void removeAllJobs() {
+        jobNames.clear();
+    }
 
 	protected Object readResolve() {
 		if (includeRegex != null)

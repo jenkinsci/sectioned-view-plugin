@@ -68,6 +68,10 @@ public class TextSection extends SectionedViewSection {
         return style != Style.NONE;
     }
 
+    public void setStyle(Style style) {
+        this.style = style;
+    }
+
     @Extension
     public static final class DescriptorImpl extends SectionedViewSectionDescriptor {
 
