@@ -59,6 +59,7 @@ public class ListViewSection extends SectionedViewSection {
     @DataBoundConstructor
     public ListViewSection(String name, Width width, Positioning alignment) {
         super(name, width, alignment);
+        initColumns();
     }
 
     public Iterable<ListViewColumn> getColumns() {
@@ -82,6 +83,14 @@ public class ListViewSection extends SectionedViewSection {
 
         return Collections.unmodifiableList(r);
     }
+    
+    protected void initColumns() {
+        if (columns != null) {
+            return;
+        }
+        ArrayList<ListViewColumn> r = new ArrayList<ListViewColumn>();
+        columns = new DescribableList<ListViewColumn,Descriptor<ListViewColumn>>(Saveable.NOOP, r);
+    }
 
     @Extension
     public static final class DescriptorImpl extends SectionedViewSectionDescriptor {
@@ -89,10 +98,8 @@ public class ListViewSection extends SectionedViewSection {
         @Override
         public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
             ListViewSection section = (ListViewSection) super.newInstance(req, formData);
+            section.initColumns();
 
-            if (section.columns == null) {
-                section.columns = new DescribableList<ListViewColumn,Descriptor<ListViewColumn>>(Saveable.NOOP);
-            }
             try {
                 section.columns.rebuildHetero(req, formData, Hudson.getInstance().<ListViewColumn,Descriptor<ListViewColumn>>getDescriptorList(ListViewColumn.class), "columns");
             } catch (IOException e) {
