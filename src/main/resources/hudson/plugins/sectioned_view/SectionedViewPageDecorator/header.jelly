@@ -22,5 +22,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-  <link type="text/css" rel="stylesheet" href="${rootURL}/plugin/sectioned-view/sectioned-view.css" />
+  <link type="text/css" rel="stylesheet" href="${resURL}/plugin/sectioned-view/sectioned-view.css" />
 </j:jelly>
