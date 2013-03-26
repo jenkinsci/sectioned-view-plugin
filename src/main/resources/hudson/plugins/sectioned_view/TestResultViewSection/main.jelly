@@ -25,10 +25,10 @@ THE SOFTWARE.
 <j:if test="${section.name.length() > 0}">
   <h2>${section.name}</h2>
 </j:if>
-                <j:if test="${empty(section.items)}">
+                <j:if test="${empty(section.getItems(it.ownerItemGroup))}">
                   <p>No jobs in this section.</p>
                 </j:if>
-                <j:forEach var="job" items="${section.items}">
+                <j:forEach var="job" items="${section.getItems(it.ownerItemGroup)}">
                   <div style="float: left; margin: 0px 0px 5px 10px;">
                     <j:set var="jobName" value="${job.displayName}"/>
                     <h3><a href="${job.shortUrl}">${jobName.length() > 33 ? jobName.substring(0, 15) + "..." + jobName.substring(jobName.length() - 15) : jobName}</a></h3>

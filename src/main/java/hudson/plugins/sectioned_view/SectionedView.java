@@ -184,7 +184,7 @@ public class SectionedView extends View {
 		List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
 
 		for (SectionedViewSection section : sections) {
-		    items.addAll(section.getItems());
+		    items.addAll(section.getItems(getOwnerItemGroup()));
 		}
 
 		return items;

@@ -51,7 +51,7 @@ THE SOFTWARE.
             return values.include(v) ? 'checked="checked" ' : "";
           }
           var views = {};
-          <local:add-children parentView="root" views="${app.views}" prefix=""/>
+          <local:add-children parentView="root" views="${it.owner.views}" prefix=""/>
 
           tree.draw();
           <!--

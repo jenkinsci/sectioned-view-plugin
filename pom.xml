@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.jvnet.hudson.plugins</groupId>
+    <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.388</version>
+    <version>1.466</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   
@@ -33,13 +33,6 @@
     <developerConnection>scm:git:https://git@github.com/jenkinsci/sectioned-view-plugin.git</developerConnection>
     <url>http://github.com/jenkinsci/sectioned-view-plugin</url>
   </scm>
-
-  <distributionManagement>
-    <repository>
-      <id>java.net-m2-repository</id>
-      <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-    </repository>
-  </distributionManagement>
 
     <repositories>
         <repository>

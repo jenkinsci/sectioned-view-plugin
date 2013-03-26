@@ -82,7 +82,7 @@ public class ViewListingSection extends SectionedViewSection {
         return columns;
     }
 
-    public List<Collection<View>> getNestedViewColumns() {
+    public List<Collection<View>> getNestedViewColumns(ViewGroup viewGroup) {
         List<Collection<View>> nestedViewColumns = new ArrayList<Collection<View>>();
         for (int i = 0; i < columns; i++) {
             nestedViewColumns.add(new ArrayList<View>());
@@ -93,7 +93,7 @@ public class ViewListingSection extends SectionedViewSection {
         int column = 0;
         for (String viewName : views) {
             String[] viewComponents = viewName.split("\\$");
-            View view = Hudson.getInstance().getView(viewComponents[0]);
+            View view = viewGroup.getView(viewComponents[0]);
             if (view == null) continue;
             boolean skipView = false;
             for (int i = 1; i < viewComponents.length; i++) {
