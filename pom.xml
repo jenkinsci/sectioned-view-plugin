@@ -10,7 +10,7 @@
   <artifactId>sectioned-view</artifactId>
   <packaging>hpi</packaging>
   <name>Sectioned View Plugin</name>
-  <version>1.17-SNAPSHOT</version>
+  <version>1.18-SNAPSHOT</version>
   <url>http://wiki.jenkins-ci.org/display/JENKINS/Sectioned+View+Plugin</url>
   <developers>
     <developer>
@@ -29,9 +29,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/jenkinsci/sectioned-view-plugin.git</connection>
-    <developerConnection>scm:git:https://git@github.com/jenkinsci/sectioned-view-plugin.git</developerConnection>
-    <url>http://github.com/jenkinsci/sectioned-view-plugin</url>
+    <connection>scm:git:git://github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
   </scm>
 
     <repositories>
