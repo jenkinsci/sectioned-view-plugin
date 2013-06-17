@@ -4,7 +4,6 @@
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
     <version>1.466</version>
-    <relativePath>../pom.xml</relativePath>
   </parent>
   
   <artifactId>sectioned-view</artifactId>
