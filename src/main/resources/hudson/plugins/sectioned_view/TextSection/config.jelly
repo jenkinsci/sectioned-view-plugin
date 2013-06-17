@@ -37,7 +37,8 @@ THE SOFTWARE.
         <f:enum>${it.description}</f:enum>
       </f:entry>
       <f:entry field="text" title="${%Text}">
-        <f:textarea codemirror-mode="${app.markupFormatter.codeMirrorMode}" codemirror-config="${app.markupFormatter.codeMirrorConfig}" previewEndpoint="/markupFormatter/previewDescription"/>
+        <!-- TODO codemirror-mode="${app.markupFormatter.codeMirrorMode}" codemirror-config="${app.markupFormatter.codeMirrorConfig}" previewEndpoint="/markupFormatter/previewDescription" causes problems -->
+        <f:textarea/>
       </f:entry>
     </f:advanced>
   </f:nested>
