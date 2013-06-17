@@ -40,7 +40,7 @@ THE SOFTWARE.
   <div>
     <table>
       <tr>
-        <j:forEach var="viewColumn" items="${section.nestedViewColumns}">
+        <j:forEach var="viewColumn" items="${section.getNestedViewColumns(it.owner)}">
           <td>
             <j:forEach var="view" items="${viewColumn}">
               <div class="sectioned-view-panel">

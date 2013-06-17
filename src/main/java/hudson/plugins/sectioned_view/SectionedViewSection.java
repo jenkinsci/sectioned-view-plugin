@@ -28,6 +28,7 @@ import hudson.ExtensionPoint;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
+import hudson.model.ItemGroup;
 import hudson.model.Saveable;
 import hudson.model.TopLevelItem;
 import hudson.util.CaseInsensitiveComparator;
@@ -151,11 +152,11 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.css = css.toString();
     }
 
-    public Collection<TopLevelItem> getItems() {
+    public Collection<TopLevelItem> getItems(ItemGroup<? extends TopLevelItem> itemGroup) {
         SortedSet<String> names = new TreeSet<String>(jobNames);
 
         if (includePattern != null) {
-            for (TopLevelItem item : Hudson.getInstance().getItems()) {
+            for (TopLevelItem item : itemGroup.getItems()) {
                 String itemName = item.getName();
                 if (includePattern.matcher(itemName).matches()) {
                     names.add(itemName);
@@ -165,14 +166,14 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
         List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
         for (String n : names) {
-            TopLevelItem item = Hudson.getInstance().getItem(n);
+            TopLevelItem item = itemGroup.getItem(n);
             if(item!=null)
                 items.add(item);
         }
 
         // check the filters
         Iterable<ViewJobFilter> jobFilters = getJobFilters();
-        List<TopLevelItem> allItems = Hudson.getInstance().getItems();
+        List<TopLevelItem> allItems = new ArrayList<TopLevelItem>(itemGroup.getItems());
         for (ViewJobFilter jobFilter: jobFilters) {
             items = jobFilter.filter(items, allItems, null);
         }

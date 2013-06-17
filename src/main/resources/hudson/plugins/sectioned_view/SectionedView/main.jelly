@@ -24,7 +24,7 @@ THE SOFTWARE.
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
   <j:choose>
     <j:when test="${empty(it.sections)}">
-      <j:if test="${!empty(app.items)}">
+      <j:if test="${!empty(it.ownerItemGroup.items)}">
         <j:set var="views" value="${it.owner.views}"/>
         <j:set var="currentView" value="${it}"/>
         <st:include page="viewTabs.jelly" it="${it.owner.viewsTabBar}"/>

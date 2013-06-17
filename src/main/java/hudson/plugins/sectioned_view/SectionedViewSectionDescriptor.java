@@ -36,12 +36,13 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import hudson.Util;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
+import hudson.model.Item;
+import hudson.model.ItemGroup;
 import hudson.model.Saveable;
-import hudson.model.TopLevelItem;
 import hudson.util.DescribableList;
 import hudson.util.FormValidation;
 import hudson.views.ViewJobFilter;
+import jenkins.model.Jenkins;
 
 public abstract class SectionedViewSectionDescriptor extends Descriptor<SectionedViewSection> {
 
@@ -70,7 +71,11 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
 		}
 		
 		section.jobNames.clear();
-		for (TopLevelItem item : Hudson.getInstance().getItems()) {
+        ItemGroup<?> group = req.findAncestorObject(ItemGroup.class);
+        if (group == null) {
+            group = Jenkins.getInstance();
+        }
+		for (Item item : group.getItems()) {
 			String escapedName = item.getName().replaceAll("\\.", "_");
 			if (formData.containsKey(escapedName) && formData.getBoolean(escapedName))
 				section.jobNames.add(item.getName());
