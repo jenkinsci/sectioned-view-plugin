@@ -33,7 +33,7 @@ THE SOFTWARE.
         <j:if test="${section.name.length() > 0 and section.hasStyle()}">
           <h3>${section.name}</h3>
         </j:if>
-        <div><j:out value="${app.markupFormatter.translate(section.text)}"/></div>
+        <div style="white-space: normal"><j:out value="${app.markupFormatter.translate(section.text)}"/></div>
       </div>
     </td>
   </tr>

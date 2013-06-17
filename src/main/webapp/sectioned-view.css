@@ -3,7 +3,6 @@
   border-width: 1px;
   padding: 10px;
   text-align: left;
-  white-space: normal;
 }
 
 .sectioned-view-note h3, .sectioned-view-warning h3, .sectioned-view-info h3, .sectioned-view-tip h3 {
