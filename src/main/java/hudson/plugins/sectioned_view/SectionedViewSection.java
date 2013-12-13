@@ -140,13 +140,19 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
 	private void determineCss() {
 	    final StringBuffer css = new StringBuffer();
-	    css.append(width.getCss());
+	    
 	    css.append(alignment.getCss());
-        if (width == Width.FULL || alignment == Positioning.CENTER) {
+	if (width == Width.THIRD && alignment == Positioning.CENTER) {
+		css.append("width: 34%; "); // the center part takes 34% so 33% + 34% + 33% = 100%
+	}
+	else {
+		css.append(width.getCss());	
+	}
+        if (width == Width.FULL) {
             css.append("clear: both; ");
         } else if (alignment == Positioning.LEFT) {
             css.append("clear: left; ");
-        } else if (alignment == Positioning.RIGHT) {
+        } else if (alignment == Positioning.RIGHT || alignment == Positioning.CENTER) {
             css.append("clear: right; ");
         }
         this.css = css.toString();
@@ -200,7 +206,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
      * Constants that control how a Section is positioned.
      */
     public enum Positioning {
-        CENTER("Center", "margin-left: auto; margin-right: auto; "),
+        CENTER("Center", "margin-left: auto; margin-right: auto; float: left;"),
         LEFT("Left", "float: left; "),
         RIGHT("Right", "float: right; ");
 
