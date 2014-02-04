@@ -35,6 +35,7 @@ import hudson.model.Saveable;
 import hudson.model.TopLevelItem;
 import hudson.model.View;
 import hudson.model.ViewDescriptor;
+import hudson.model.ViewGroup;
 import hudson.model.Descriptor.FormException;
 import hudson.util.DescribableList;
 
@@ -63,6 +64,11 @@ public class SectionedView extends View {
 	@DataBoundConstructor
 	public SectionedView(String name) {
 		super(name);
+		initSections();
+	}
+
+	public SectionedView(String name, ViewGroup owner) {
+		super(name, owner);
 		initSections();
 	}
 
