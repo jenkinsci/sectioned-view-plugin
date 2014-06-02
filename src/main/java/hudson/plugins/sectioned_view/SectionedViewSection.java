@@ -155,8 +155,9 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     public Collection<TopLevelItem> getItems(ItemGroup<? extends TopLevelItem> itemGroup) {
         SortedSet<String> names = new TreeSet<String>(jobNames);
 
+        Collection<? extends TopLevelItem> topLevelItems = itemGroup.getItems();
         if (includePattern != null) {
-            for (TopLevelItem item : itemGroup.getItems()) {
+            for (TopLevelItem item : topLevelItems) {
                 String itemName = item.getName();
                 if (includePattern.matcher(itemName).matches()) {
                     names.add(itemName);
@@ -173,7 +174,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
         // check the filters
         Iterable<ViewJobFilter> jobFilters = getJobFilters();
-        List<TopLevelItem> allItems = new ArrayList<TopLevelItem>(itemGroup.getItems());
+        List<TopLevelItem> allItems = new ArrayList<TopLevelItem>(topLevelItems);
         for (ViewJobFilter jobFilter: jobFilters) {
             items = jobFilter.filter(items, allItems, null);
         }
