@@ -165,7 +165,7 @@ public class SectionedView extends View {
 	@Override
 	public boolean contains(TopLevelItem item) {
 		for (SectionedViewSection section : sections) {
-			if (section.contains(item)) {
+			if (section.contains(item, getOwnerItemGroup())) {
 				return true;
 			}
 		}

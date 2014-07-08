@@ -29,6 +29,8 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.servlet.ServletException;
 
+import hudson.model.Items;
+import hudson.model.TopLevelItem;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.QueryParameter;
@@ -75,10 +77,11 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
         if (group == null) {
             group = Jenkins.getInstance();
         }
-		for (Item item : group.getItems()) {
-			String escapedName = item.getName().replaceAll("\\.", "_");
+
+        for (TopLevelItem item : Items.getAllItems(group, TopLevelItem.class)) {
+			String escapedName = item.getRelativeNameFrom(group).replaceAll("\\.", "_");
 			if (formData.containsKey(escapedName) && formData.getBoolean(escapedName))
-				section.jobNames.add(item.getName());
+				section.jobNames.add(item.getRelativeNameFrom(group));
 		}
 
         if (section.jobFilters == null) {

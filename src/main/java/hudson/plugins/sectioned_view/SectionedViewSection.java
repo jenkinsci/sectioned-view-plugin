@@ -29,6 +29,7 @@ import hudson.model.Describable;
 import hudson.model.Descriptor;
 import hudson.model.Hudson;
 import hudson.model.ItemGroup;
+import hudson.model.Items;
 import hudson.model.Saveable;
 import hudson.model.TopLevelItem;
 import hudson.util.CaseInsensitiveComparator;
@@ -43,6 +44,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import jenkins.model.Jenkins;
 import org.kohsuke.stapler.Stapler;
 
 public abstract class SectionedViewSection implements ExtensionPoint, Describable<SectionedViewSection> {
@@ -122,8 +124,8 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.alignment = alignment;
     }
 
-    public boolean contains(TopLevelItem item) {
-		return jobNames.contains(item.getName());
+    public boolean contains(TopLevelItem item, ItemGroup<? extends TopLevelItem> itemGroup) {
+		return jobNames.contains(item.getRelativeNameFrom(itemGroup));
 	}
 
 	protected Object readResolve() {
@@ -156,8 +158,8 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         SortedSet<String> names = new TreeSet<String>(jobNames);
 
         if (includePattern != null) {
-            for (TopLevelItem item : itemGroup.getItems()) {
-                String itemName = item.getName();
+            for (TopLevelItem item : Items.getAllItems(itemGroup, TopLevelItem.class)) {
+                String itemName = item.getRelativeNameFrom(itemGroup);
                 if (includePattern.matcher(itemName).matches()) {
                     names.add(itemName);
                 }
@@ -166,7 +168,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
         List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
         for (String n : names) {
-            TopLevelItem item = itemGroup.getItem(n);
+            TopLevelItem item = Jenkins.getInstance().getItem(n, itemGroup, TopLevelItem.class);
             if(item!=null)
                 items.add(item);
         }

@@ -32,12 +32,13 @@ THE SOFTWARE.
       <f:entry field="width" title="${%Width}">
         <f:enum>${it.description}</f:enum>
       </f:entry>
+
       <f:entry title="${%Jobs}">
         <j:set var="escapeRegEx" value="\."/>
         <j:set var="replaceString" value="_"/>
-        <j:forEach var="job" items="${it.ownerItemGroup.items}">
+        <j:forEach var="job" items="${h.getAllTopLevelItems(it.ownerItemGroup)}">
           <f:checkbox name='sections.${job.name.replaceAll(escapeRegEx, replaceString)}' checked="${instance.contains(job)}" />
-          <label class="attach-previous">${job.name}</label>
+          <label class="attach-previous">${h.getRelativeNameFrom(job, it.ownerItemGroup, true)}</label>
           <br/>
         </j:forEach>
       </f:entry>
