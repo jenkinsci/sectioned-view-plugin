@@ -57,3 +57,11 @@
 .sectioned-view-panel .sectioned-view-panel-content {
   padding: 5px;
 }
+
+.dashboard {
+  overflow: hidden;
+}
+
+.dashboard .pane {
+  padding: 0 10px 10px 10px;
+}
