@@ -76,3 +76,8 @@
   margin: 0 10px;
   padding: 10px;
 }
+
+.pane td {
+    vertical-align: top;
+}
+
