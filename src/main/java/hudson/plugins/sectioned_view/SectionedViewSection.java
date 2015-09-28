@@ -104,8 +104,12 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         return jobFilters;
     }
 
+    /**
+     * @deprecated use {@link SectionedViewSectionDescriptor#hasJobFilterExtensions()} instead
+     */
+    @Deprecated
     public boolean hasJobFilterExtensions() {
-        return !ViewJobFilter.all().isEmpty();
+        return getDescriptor().hasJobFilterExtensions();
     }
 
 	public Width getWidth() {
