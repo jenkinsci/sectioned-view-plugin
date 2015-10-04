@@ -30,8 +30,9 @@ THE SOFTWARE.
 </j:if>
 
 <j:set var="columnExtensions" value="${section.columns}"/>
-<table id="projectstatus" class="pane bigtable">
-  <tr style="border-top: 0px;">
+<div class="pane-frame">
+<table id="projectstatus" class="sortable pane bigtable stripped-odd">
+  <tr class="header">
     <j:forEach var="col" items="${columnExtensions}">
       <st:include page="columnHeader.jelly" it="${col}" />
     </j:forEach>
@@ -44,4 +45,5 @@ THE SOFTWARE.
     <t:projectViewRow jobBaseUrl="${relativeLinkToJob.substring(0, relativeLinkToJob.length() - job.shortUrl.length())}"/>
   </j:forEach>
 </table>
+</div>
 </j:jelly>
