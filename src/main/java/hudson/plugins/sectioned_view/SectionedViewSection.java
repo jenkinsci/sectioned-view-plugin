@@ -179,7 +179,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
         // check the filters
         Iterable<ViewJobFilter> jobFilters = getJobFilters();
-        List<TopLevelItem> allItems = new ArrayList<TopLevelItem>(itemGroup.getItems());
+        List<TopLevelItem> allItems = Items.getAllItems(itemGroup, TopLevelItem.class);
         for (ViewJobFilter jobFilter: jobFilters) {
             items = jobFilter.filter(items, allItems, null);
         }
