@@ -55,6 +55,10 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
 	protected SectionedViewSectionDescriptor() {
 	}
 
+    public boolean hasJobFilterExtensions() {
+        return !ViewJobFilter.all().isEmpty();
+    }
+
 	@Override
 	public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
 		SectionedViewSection section = (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
