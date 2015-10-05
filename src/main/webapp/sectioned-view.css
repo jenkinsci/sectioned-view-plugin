@@ -37,16 +37,21 @@
   border-color: #6699ff;
   border-style: solid;
   border-width: 1px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px 4px #888888;
+  border-radius: 5px;
+}
+
+.sectioned-view-panel a {
+  text-decoration: none;
 }
 
 .sectioned-view-panel .sectioned-view-panel-header {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #6699ff;
-  background-color: #bbbbff;
+  background-color: #ddf;
   padding: 5px;
+  margin: 3px;
   text-align: center;
+  border-radius: 5px;
 }
 
 .sectioned-view-panel .sectioned-view-panel-header h4 {
@@ -65,3 +70,14 @@
 .dashboard .pane {
   padding: 0 10px 10px 10px;
 }
+
+.sectioned-view-panel-content ul {
+  list-style-type: none;
+  margin: 0 10px;
+  padding: 10px;
+}
+
+.pane td {
+    vertical-align: top;
+}
+
