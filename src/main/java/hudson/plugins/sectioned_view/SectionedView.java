@@ -180,8 +180,7 @@ public class SectionedView extends View {
 
 	@Override
 	public Collection<TopLevelItem> getItems() {
-		SortedSet<String> names = new TreeSet<String>();
-		List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
+		List<TopLevelItem> items = new ArrayList<TopLevelItem>();
 
 		for (SectionedViewSection section : sections) {
 		    items.addAll(section.getItems(getOwnerItemGroup()));
