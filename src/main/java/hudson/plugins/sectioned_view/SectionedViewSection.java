@@ -145,22 +145,26 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 	}
 
 	private void determineCss() {
+	    
 	    final StringBuffer css = new StringBuffer();
 	    
 	    css.append(alignment.getCss());
-	if (width == Width.THIRD && alignment == Positioning.CENTER) {
-		css.append("width: 34%; "); // the center part takes 34% so 33% + 34% + 33% = 100%
-	}
-	else {
-		css.append(width.getCss());	
-	}
+	    
+    	if (width == Width.THIRD && alignment == Positioning.CENTER) {
+    		css.append("width: 34%; "); // the center part takes 34% so 33% + 34% + 33% = 100%
+    	}
+    	else {
+    		css.append(width.getCss());	
+    	}
+    	
         if (width == Width.FULL) {
-            css.append("clear: both; ");
+            css.append("clear: none; ");
         } else if (alignment == Positioning.LEFT) {
             css.append("clear: left; ");
         } else if (alignment == Positioning.RIGHT || alignment == Positioning.CENTER) {
             css.append("clear: right; ");
         }
+        
         this.css = css.toString();
     }
 
