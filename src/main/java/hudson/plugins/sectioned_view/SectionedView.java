@@ -60,13 +60,18 @@ public class SectionedView extends View {
 		return sections;
 	}
 
+	public void setSections(Collection<? extends SectionedViewSection> sections) {
+		this.sections.clear();
+		this.sections.addAll(sections);
+	}
+
 	@DataBoundConstructor
 	public SectionedView(String name) {
 		super(name);
 		initSections();
 	}
 
-	protected void initSections() {
+	private void initSections() {
 		if (sections != null) {
 			// already persisted
 			return;
@@ -138,12 +143,8 @@ public class SectionedView extends View {
 	 * Load view-specific properties here.
 	 */
 	@Override
-	protected void submit(StaplerRequest req) throws ServletException,
-			FormException {
-		if (sections == null) {
-			sections = new DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>>(
-					Saveable.NOOP);
-		}
+	protected void submit(StaplerRequest req) throws ServletException, FormException {
+		initSections();
 		try {
             sections.rebuildHetero(req, req.getSubmittedForm(), Hudson
             		.getInstance().<SectionedViewSection, Descriptor<SectionedViewSection>>getDescriptorList(SectionedViewSection.class),
