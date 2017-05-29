@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import jenkins.model.Jenkins;
 import org.kohsuke.stapler.Stapler;
@@ -65,41 +66,46 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
     private String name;
 
-	/**
-	 * Include regex string.
-	 */
-	String includeRegex;
+    /**
+     * Include regex string.
+     */
+    String includeRegex;
 
-	/**
-	 * Compiled include pattern from the includeRegex string.
-	 */
-	transient Pattern includePattern;
+    /**
+     * Compiled include pattern from the includeRegex string.
+     */
+    transient Pattern includePattern;
 
-	private Width width;
+    private Width width;
 
-	private Positioning alignment;
+    private Positioning alignment;
 
-	transient String css;
+    transient String css;
 
     /**
      * Returns all the registered {@link SectionedViewSection} descriptors.
      */
     public static DescriptorExtensionList<SectionedViewSection, SectionedViewSectionDescriptor> all() {
-    	return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
+        return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
     }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getIncludeRegex() {
-		return includeRegex;
-	}
-    
+    public String getIncludeRegex() {
+        return includeRegex;
+    }
+
+    public void setIncludeRegex(String regex) throws PatternSyntaxException {
+        includeRegex = regex;
+        includePattern = Pattern.compile(regex);
+    }
+
     public Iterable<ViewJobFilter> getJobFilters() {
         return jobFilters;
     }
@@ -112,7 +118,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         return getDescriptor().hasJobFilterExtensions();
     }
 
-	public Width getWidth() {
+    public Width getWidth() {
         return width;
     }
 
@@ -129,31 +135,31 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     }
 
     public boolean contains(TopLevelItem item, ItemGroup<? extends TopLevelItem> itemGroup) {
-		return jobNames.contains(item.getRelativeNameFrom(itemGroup));
-	}
+        return jobNames.contains(item.getRelativeNameFrom(itemGroup));
+    }
 
-	protected Object readResolve() {
-		if (includeRegex != null)
-			includePattern = Pattern.compile(includeRegex);
-		if (width == null)
-		    width = Width.FULL;
-		if (alignment == null)
-		    alignment = Positioning.CENTER;
-		determineCss();
+    protected Object readResolve() {
+        if (includeRegex != null)
+            setIncludeRegex(includeRegex);
+        if (width == null)
+            width = Width.FULL;
+        if (alignment == null)
+            alignment = Positioning.CENTER;
+        determineCss();
         initJobFilters();
-		return this;
-	}
+        return this;
+    }
 
-	private void determineCss() {
-	    final StringBuffer css = new StringBuffer();
-	    
-	    css.append(alignment.getCss());
-	if (width == Width.THIRD && alignment == Positioning.CENTER) {
-		css.append("width: 34%; "); // the center part takes 34% so 33% + 34% + 33% = 100%
-	}
-	else {
-		css.append(width.getCss());	
-	}
+    private void determineCss() {
+        final StringBuffer css = new StringBuffer();
+
+        css.append(alignment.getCss());
+        if (width == Width.THIRD && alignment == Positioning.CENTER) {
+            css.append("width: 34%; "); // the center part takes 34% so 33% + 34% + 33% = 100%
+        }
+        else {
+            css.append(width.getCss());
+        }
         if (width == Width.FULL) {
             css.append("clear: both; ");
         } else if (alignment == Positioning.LEFT) {
@@ -191,8 +197,8 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
             items = jobFilter.filter(items, allItems, null);
         }
         return items;
-	}
-    
+    }
+
     protected void initJobFilters() {
         if (jobFilters != null) {
             return;

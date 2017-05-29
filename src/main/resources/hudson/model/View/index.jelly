@@ -1,0 +1,60 @@
+<!--
+The MIT License
+
+Copyright (c) 2004-2009, Sun Microsystems, Inc., Kohsuke Kawaguchi, Tom Huybrechts
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+
+<!--
+  Overriding https://github.com/jenkinsci/jenkins/blob/master/core/src/main/resources/hudson/model/View/index.jelly.
+
+  The changes are kept minimal for easier updates. https://issues.jenkins-ci.org/browse/JENKINS-37174
+-->
+<?jelly escape-by-default='true'?>
+<st:compress xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <l:layout title="${it.class.name=='hudson.model.AllView' ? '%Dashboard' : it.viewName}${not empty it.ownerItemGroup.fullDisplayName?' ['+it.ownerItemGroup.fullDisplayName+']':''}" norefresh="${!it.automaticRefreshEnabled}">
+        <j:set var="view" value="${it}"/> <!-- expose view to the scripts we include from owner -->
+        <st:include page="sidepanel.jelly" />
+        <l:main-panel>
+            <st:include page="view-index-top.jelly" it="${it.owner}" optional="true">
+                <!-- allow the owner to take over the top section, but we also need the default to be backward compatible -->
+                <div id="view-message">
+                    <div id="systemmessage">
+                        <j:out value="${app.systemMessage!=null ? app.markupFormatter.translate(app.systemMessage) : ''}" />
+                    </div>
+                    <t:editableDescription permission="${it.CONFIGURE}"/>
+                </div>
+            </st:include>
+
+            <j:if test="${view.class.name!='hudson.plugins.sectioned_view.SectionedView'}">
+                <!-- Do not call this as it causes all sections to filter items for no reason. -->
+                <j:set var="items" value="${it.items}"/>
+            </j:if>
+            <st:include page="main.jelly" />
+        </l:main-panel>
+        <l:header>
+            <!-- for screen resolution detection -->
+            <l:yui module="cookie" />
+            <script>
+                YAHOO.util.Cookie.set("screenResolution", screen.width+"x"+screen.height);
+            </script>
+        </l:header>
+    </l:layout>
+</st:compress>

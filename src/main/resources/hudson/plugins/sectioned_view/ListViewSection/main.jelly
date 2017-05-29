@@ -25,7 +25,8 @@ THE SOFTWARE.
 <j:if test="${section.name.length() > 0}">
   <h2>${section.name}</h2>
 </j:if>
-<j:if test="${empty(section.getItems(it.ownerItemGroup))}">
+<j:set var="sectionItems" value="${section.getItems(it.ownerItemGroup)}"/>
+<j:if test="${empty(sectionItems)}">
   <p>No jobs in this section.</p>
 </j:if>
 
@@ -40,8 +41,7 @@ THE SOFTWARE.
       <st:nbsp/>
     </th>
   </tr>
-  <j:set var="itemGroup" value="${it.ownerItemGroup}"/>
-  <j:forEach var="job" items="${section.getItems(itemGroup)}">
+  <j:forEach var="job" items="${sectionItems}">
     <j:set var="relativeLinkToJob" value="${h.getRelativeLinkTo(job)}"/>
     <t:projectViewRow jobBaseUrl="${relativeLinkToJob.substring(0, relativeLinkToJob.length() - job.shortUrl.length())}"/>
   </j:forEach>
