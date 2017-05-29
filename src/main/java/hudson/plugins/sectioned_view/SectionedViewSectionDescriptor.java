@@ -48,45 +48,44 @@ import jenkins.model.Jenkins;
 
 public abstract class SectionedViewSectionDescriptor extends Descriptor<SectionedViewSection> {
 
-	protected SectionedViewSectionDescriptor(Class<? extends SectionedViewSection> clazz) {
-		super(clazz);
-	}
+    protected SectionedViewSectionDescriptor(Class<? extends SectionedViewSection> clazz) {
+        super(clazz);
+    }
 
-	protected SectionedViewSectionDescriptor() {
-	}
+    protected SectionedViewSectionDescriptor() {
+    }
 
     public boolean hasJobFilterExtensions() {
         return !ViewJobFilter.all().isEmpty();
     }
 
-	@Override
-	public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
-		SectionedViewSection section = (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
+    @Override
+    public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+        SectionedViewSection section = (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
 
-		if (formData.get("useincluderegex") != null) {
-			JSONObject merp = formData.getJSONObject("useincluderegex");
-			section.includeRegex = Util.nullify(merp.getString("includeRegex"));
-			try {
-				section.includePattern = Pattern.compile(section.includeRegex);
-			} catch (PatternSyntaxException e) {
-				throw new FormException("Regular expression is invalid: " + e.getMessage(), e, "includeRegex");
-			}
-		} else {
-			section.includeRegex = null;
-			section.includePattern = null;
-		}
-		
-		section.jobNames.clear();
+        if (formData.get("useincluderegex") != null) {
+            JSONObject merp = formData.getJSONObject("useincluderegex");
+            try {
+                section.setIncludeRegex(Util.nullify(merp.getString("includeRegex")));
+            } catch (PatternSyntaxException e) {
+                throw new FormException("Regular expression is invalid: " + e.getMessage(), e, "includeRegex");
+            }
+        } else {
+            section.includeRegex = null;
+            section.includePattern = null;
+        }
+
+        section.jobNames.clear();
         ItemGroup<?> group = req.findAncestorObject(ItemGroup.class);
         if (group == null) {
             group = Jenkins.getInstance();
         }
 
         for (TopLevelItem item : Items.getAllItems(group, TopLevelItem.class)) {
-			String escapedName = item.getRelativeNameFrom(group).replaceAll("\\.", "_");
-			if (formData.containsKey(escapedName) && formData.getBoolean(escapedName))
-				section.jobNames.add(item.getRelativeNameFrom(group));
-		}
+            String escapedName = item.getRelativeNameFrom(group).replaceAll("\\.", "_");
+            if (formData.containsKey(escapedName) && formData.getBoolean(escapedName))
+                section.jobNames.add(item.getRelativeNameFrom(group));
+        }
 
         if (section.jobFilters == null) {
             section.jobFilters = new DescribableList<ViewJobFilter,Descriptor<ViewJobFilter>>(Saveable.NOOP);
@@ -96,9 +95,9 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
         } catch (IOException e) {
             throw new FormException("Error rebuilding list of view job filters.", e, "jobFilters");
         }
-        
-		return section;
-	}
+
+        return section;
+    }
 
     /**
      * Checks if the include regular expression is valid.
