@@ -185,9 +185,12 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
         List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
         for (String n : names) {
-            TopLevelItem item = Jenkins.getInstance().getItem(n, itemGroup, TopLevelItem.class);
-            if(item!=null)
-                items.add(item);
+            Jenkins instance = Jenkins.getInstance();
+            if (instance != null) {
+                TopLevelItem item = instance.getItem(n, itemGroup, TopLevelItem.class);
+                if (item != null)
+                    items.add(item);
+            }
         }
 
         // check the filters

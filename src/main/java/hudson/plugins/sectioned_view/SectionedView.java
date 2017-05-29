@@ -39,6 +39,7 @@ import hudson.model.Descriptor.FormException;
 import hudson.util.DescribableList;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -95,7 +96,10 @@ public class SectionedView extends View {
 				&& (lastBuild.isLogUpdated() || lastBuild.isBuilding());
 	}
 
-	private static final class JobComparator implements Comparator<Job> {
+	private static final class JobComparator implements Comparator<Job>, Serializable {
+
+		private static final long serialVersionUID = 6388545755407223000L;
+
 		public int compare(Job o1, Job o2) {
 			// first compare by status
 			Result r1 = getResult(o1);
