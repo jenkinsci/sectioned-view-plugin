@@ -8,6 +8,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import hudson.markup.RawHtmlMarkupFormatter;
 import hudson.model.Descriptor;
 import hudson.model.ItemGroup;
 import hudson.util.DescribableList;
@@ -55,6 +56,22 @@ public class SectionedViewTest {
         verify(jgs, times(1)).getItems(any(ItemGroup.class));
         verify(lvs, times(1)).getItems(any(ItemGroup.class));
         verify(trvs, times(1)).getItems(any(ItemGroup.class));
+    }
+
+    @Test @Issue("JENKINS-44987")
+    public void htmlUI() throws Exception {
+        String MARKUP = "<div><b><a href=\"adsf\">LVS</a></b></div>";
+
+        j.jenkins.setMarkupFormatter(new RawHtmlMarkupFormatter(false));
+
+        SectionedView sw = new SectionedView("SW");
+        j.jenkins.addView(sw);
+        DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>> sections = (DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>>) sw.getSections();
+        sections.add(new ListViewSection(MARKUP, SectionedViewSection.Width.THIRD, SectionedViewSection.Positioning.CENTER));
+
+        JenkinsRule.WebClient wc = j.createWebClient();
+        String content = wc.getPage(sw).getWebResponse().getContentAsString();
+        assertThat(content, containsString(MARKUP));
     }
 }
 

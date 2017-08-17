@@ -48,6 +48,8 @@ import java.util.regex.PatternSyntaxException;
 import jenkins.model.Jenkins;
 import org.kohsuke.stapler.Stapler;
 
+import javax.annotation.Nonnull;
+
 public abstract class SectionedViewSection implements ExtensionPoint, Describable<SectionedViewSection> {
 
     public SectionedViewSection(String name, Width width, Positioning alignment) {
@@ -89,8 +91,8 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
     }
 
-    public String getName() {
-        return name;
+    public @Nonnull String getName() {
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {

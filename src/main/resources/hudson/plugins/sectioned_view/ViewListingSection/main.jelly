@@ -37,7 +37,7 @@ THE SOFTWARE.
   </d:taglib>
   
   <j:if test="${section.name.length() > 0}">
-    <h2>${section.name}</h2>
+    <h2><j:out value="${app.markupFormatter.translate(section.name)}"/></h2>
   </j:if>
   <div>
     <table>
