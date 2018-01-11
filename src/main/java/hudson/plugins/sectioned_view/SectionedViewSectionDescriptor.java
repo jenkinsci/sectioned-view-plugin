@@ -70,6 +70,7 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
             } catch (PatternSyntaxException e) {
                 throw new FormException("Regular expression is invalid: " + e.getMessage(), e, "includeRegex");
             }
+            section.setExecutingRegexOnAllJobs(merp.getBoolean("executingRegexOnAllJobs"));
         } else {
             section.includeRegex = null;
             section.includePattern = null;

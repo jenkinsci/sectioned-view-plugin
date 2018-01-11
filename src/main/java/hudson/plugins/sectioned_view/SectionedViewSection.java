@@ -72,6 +72,12 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
      * Include regex string.
      */
     String includeRegex;
+    
+    /**
+     * execute regex on all jobs
+     */
+    
+    boolean executingRegexOnAllJobs;
 
     /**
      * Compiled include pattern from the includeRegex string.
@@ -108,6 +114,14 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         includePattern = Pattern.compile(regex);
     }
 
+    public boolean isExecutingRegexOnAllJobs() {
+        return executingRegexOnAllJobs;
+    }
+    
+    public void setExecutingRegexOnAllJobs(boolean value) {
+        this.executingRegexOnAllJobs = value;
+    }
+    
     public Iterable<ViewJobFilter> getJobFilters() {
         return jobFilters;
     }
@@ -175,7 +189,13 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     public Collection<TopLevelItem> getItems(ItemGroup<? extends TopLevelItem> itemGroup) {
         SortedSet<String> names = new TreeSet<String>(jobNames);
 
-        Collection<? extends TopLevelItem> topLevelItems = Items.getAllItems(itemGroup, TopLevelItem.class);
+        Collection<? extends TopLevelItem> topLevelItems = null;
+        if(executingRegexOnAllJobs) {
+            topLevelItems = Items.getAllItems(itemGroup, TopLevelItem.class);
+        } else {
+            topLevelItems = itemGroup.getItems();
+        }
+        
         if (includePattern != null) {
             for (TopLevelItem item : topLevelItems) {
                 String itemName = item.getRelativeNameFrom(itemGroup);
