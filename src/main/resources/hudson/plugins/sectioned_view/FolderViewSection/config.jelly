@@ -1,0 +1,105 @@
+<!--
+The MIT License
+
+Copyright (c) 2009-2011, Timothy Bingaman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:local="local">
+
+    <d:taglib uri="local">
+        <d:tag name="add-children">
+            <j:forEach var="item" items="${items}">
+                <j:if test="${descriptor.isFolder(item)}">
+                    <j:set var="itemName" value="${prefix == ''?'':prefix+'$'}${item.name}"/>
+                    <j:set var="escapeRegEx" value="\."/>
+                    <j:set var="replaceString" value="_"/>
+                    <j:set var="name" value="sections.${h.getRelativeNameFrom(item, it.ownerItemGroup, false).replaceAll(escapeRegEx, replaceString)}"/>
+                    items['${itemName}'] = new YAHOO.widget.HTMLNode('&lt;input type="checkbox" name="${name}" '+has("${itemName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(item.name)}&lt;/label&gt;', ${parentNode}, false);
+                    <j:if test="${item.items != null}">
+                        <local:add-children parentNode="items['${itemName}']" items="${item.items}" prefix="${itemName}"/>
+                    </j:if>
+                </j:if>
+            </j:forEach>
+        </d:tag>
+    </d:taglib>
+
+    <f:nested>
+        <f:entry title="Name">
+            <f:textbox name="sections.name" value="${instance.name}"/>
+        </f:entry>
+        <f:entry title="Folders">
+            <div class="yahooTree folders-tree" style="border: 1px solid #ccc; height: 20em; overflow:auto;" values="${instance.getSelectedFoldersString(it.ownerItemGroup)}"/>
+            <script>
+                hudsonRules["DIV.folders-tree"] = function(e) {
+                    var tree = new YAHOO.widget.TreeView(e);
+                    var rootNode = tree.getRoot();
+
+                    var values = (e.getAttribute("values") || "").split(",");
+
+                    function has(v) {
+                        return values.include(v) ? 'checked="true" ' : "";
+                    }
+                    var items = {};
+
+                    <local:add-children parentNode="rootNode" items="${descriptor.getAvailableFolders(it.ownerItemGroup, it)}" prefix=""/>
+
+                    tree.draw();
+                    <!--
+                      force the rendering of HTML, so that input fields are there
+                      even when the form is submitted without this tree expanded.
+                    -->
+                    tree.expandAll();
+                    tree.collapseAll();
+
+                    <!--
+                      cancel the event.
+
+                      from http://yuilibrary.com/forum/viewtopic.php?f=89&t=8209&p=26239&hilit=HTMLNode#p26239
+                      "To prevent toggling and allow the link to work, add a listener to the clickEvent on that tree and simply return false"
+                    -->
+                    tree.subscribe("clickEvent", function(node) {
+                        return false;
+                    });
+                };
+            </script>
+        </f:entry>
+        <f:advanced>
+            <f:entry field="alignment" title="${%Align}">
+                <f:enum>${it.description}</f:enum>
+            </f:entry>
+            <f:entry field="width" title="${%Width}">
+                <f:enum>${it.description}</f:enum>
+            </f:entry>
+            <f:entry field="viewColumns" title="${%Columns}">
+                <f:textbox default="1"/>
+            </f:entry>
+            <f:entry field="folderLevels" title="${%Levels}">
+                <f:textbox default="10"/>
+            </f:entry>
+            <f:entry field="hideJobs" title="${%Hide Jobs}">
+                <f:checkbox name="hideJobs" default="true" checked="${it.hideJobs}"/>
+            </f:entry>
+            <f:entry field="regexFilter" title="${%Regex Filter}">
+                <f:textbox name="regexFilter" value="${it.regexFilter}"/>
+            </f:entry>
+        </f:advanced>
+    </f:nested>
+</j:jelly>

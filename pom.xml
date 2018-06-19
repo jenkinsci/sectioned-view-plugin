@@ -78,6 +78,12 @@
       <version>1.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <optional>true</optional>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>cloudbees-folder</artifactId>
+      <version>5.18</version>
+    </dependency>
 
   </dependencies>
 
