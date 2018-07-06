@@ -43,6 +43,7 @@ THE SOFTWARE.
       <st:nbsp/>
     </th>
   </tr>
+  <j:set var="itemGroup" value="${it.ownerItemGroup}"/>
   <j:forEach var="job" items="${sectionItems}">
     <j:set var="relativeLinkToJob" value="${h.getRelativeLinkTo(job)}"/>
     <t:projectViewRow jobBaseUrl="${relativeLinkToJob.substring(0, relativeLinkToJob.length() - job.shortUrl.length())}"/>
