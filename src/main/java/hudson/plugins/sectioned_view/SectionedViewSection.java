@@ -175,7 +175,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     public Collection<TopLevelItem> getItems(ItemGroup<? extends TopLevelItem> itemGroup) {
         SortedSet<String> names = new TreeSet<String>(jobNames);
 
-        Collection<? extends TopLevelItem> topLevelItems = itemGroup.getItems();
+        Collection<? extends TopLevelItem> topLevelItems = Items.getAllItems(itemGroup, TopLevelItem.class);
         if (includePattern != null) {
             for (TopLevelItem item : topLevelItems) {
                 String itemName = item.getRelativeNameFrom(itemGroup);
