@@ -24,18 +24,18 @@
 
 ### Release 1.20 - 18 Nov 2015
 
-* JENKINS-25920 Update UI style to match that in newer Jenkins versions
-* JENKINS-8276 Fixed issue with View Job Filters in List View Section
+* [JENKINS-25920](https://issues.jenkins-ci.org/browse/JENKINS-25920) Update UI style to match that in newer Jenkins versions
+* [JENKINS-8276](https://issues.jenkins-ci.org/browse/JENKINS-8276) Fixed issue with View Job Filters in List View Section
 * Job names in List View Section inside a Folder are now relative to that folder
-* JENKINS-30799 Job list in List View Section config is now scrollable
+* [JENKINS-30799](https://issues.jenkins-ci.org/browse/JENKINS-30799) Job list in List View Section config is now scrollable
 * View Listing Section style updated to match newer Jenkins
 * Fixed View Job Filters for jobs in Folders
-* JENKINS-19376 + JENKINS-10612 - Fixed display of 3-column layout
+* [JENKINS-19376](https://issues.jenkins-ci.org/browse/JENKINS-19376) + [JENKINS-10612](https://issues.jenkins-ci.org/browse/JENKINS-10612) - Fixed display of 3-column layout
 
 ### Release 1.19 - 10 Jul 2015
 
-* Support jobs within subfolders. Changes.
-* JENKINS-29250 - Sectioned View appearance broken in 1.619
+* Support jobs within subfolders. [Changes](https://github.com/jenkinsci/sectioned-view-plugin/commit/e405ad06b55ddf8a2a98f6998d5975e771b47bea).
+* [JENKINS-29250](https://issues.jenkins-ci.org/browse/JENKINS-29250) - Sectioned View appearance broken in 1.619
 
 ### Release 1.18 - 17 Jun 2013
 
@@ -50,8 +50,8 @@
 
 ### Release 1.16 - 4 Dec 2011
 
-* Fixed word wrapping in text section JENKINS-11755
-* Fixed nested view tree in view listing section for recent versions of Jenkins JENKINS-11702
+* Fixed word wrapping in text section [JENKINS-11755](https://issues.jenkins-ci.org/browse/JENKINS-11755)
+* Fixed nested view tree in view listing section for recent versions of Jenkins [JENKINS-11702](https://issues.jenkins-ci.org/browse/JENKINS-11702)
 
 ### Release 1.15 - 23 Mar 2011
 
@@ -66,7 +66,7 @@
 ### Release 1.13 - 13 Dec 2010
 
 * Built against Jenkins 1.388
-* Applied patch for JENKINS-8276 - Added ability to use View Job Filters on all Sectioned View Sections.
+* Applied patch for [JENKINS-8276](https://issues.jenkins-ci.org/browse/JENKINS-8276) - Added ability to use View Job Filters on all Sectioned View Sections.
 
 ### Release 1.12 - 1 Nov 2010
 
@@ -82,7 +82,7 @@
 
 ### Release 1.10 - 23 Feb 2010
 
-* Fixed url to compiler warnings trend graph when using a newer version of the Warnings Plugin - JENKINS-5725
+* Fixed url to compiler warnings trend graph when using a newer version of the Warnings Plugin - [JENKINS-5725](https://issues.jenkins-ci.org/browse/JENKINS-5725)
 * Note: this version will now fail to display the warnings when used with older versions of the Warnings Plugin
 * Added some new graphs to Job Graphs Section
 * Open Tasks trend
@@ -105,7 +105,7 @@
 
 ### Release 1.6
 
-* Fixed JENKINS-4844 - Sectioned View in "My Views" now shows the correct tabs.
+* Fixed [JENKINS-4844](https://issues.jenkins-ci.org/browse/JENKINS-4844) - Sectioned View in "My Views" now shows the correct tabs.
 
 ### Release 1.5
 
