@@ -36,10 +36,8 @@ THE SOFTWARE.
       </f:entry>
       <f:entry title="${%Jobs}">
         <div class="listview-jobs">
-          <j:set var="escapeRegEx" value="\."/>
-          <j:set var="replaceString" value="_"/>
           <j:forEach var="job" items="${h.getAllTopLevelItems(it.ownerItemGroup)}">
-            <f:checkbox name='sections.${h.getRelativeNameFrom(job, it.ownerItemGroup, false).replaceAll(escapeRegEx, replaceString)}' checked="${instance.contains(job, it.ownerItemGroup)}" />
+            <f:checkbox name='sections.${descriptor.escapeJobName(h.getRelativeNameFrom(job, it.ownerItemGroup, false))}' checked="${instance.contains(job, it.ownerItemGroup)}" />
             <label class="attach-previous">${h.getRelativeNameFrom(job, it.ownerItemGroup, true)}</label>
             <br/>
           </j:forEach>

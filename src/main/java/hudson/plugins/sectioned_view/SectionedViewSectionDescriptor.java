@@ -82,7 +82,7 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
         }
 
         for (TopLevelItem item : Items.getAllItems(group, TopLevelItem.class)) {
-            String escapedName = item.getRelativeNameFrom(group).replaceAll("\\.", "_");
+            String escapedName = escapeJobName(item.getRelativeNameFrom(group));
             if (formData.containsKey(escapedName) && formData.getBoolean(escapedName))
                 section.jobNames.add(item.getRelativeNameFrom(group));
         }
@@ -112,6 +112,25 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
             }
         }
         return FormValidation.ok();
+    }
+
+    /**
+     * Utility method which escapes job names so that they can be safely
+     * inserted into the name field of HTML inputs. Escaping is needed since
+     * job names may contain characters which have special meaning in name
+     * fields of HTML inputs. For example the dot (.) character, in a name
+     * field Jenkins input handling (Stapler) will treat the dot as an
+     * hierarchical separation and split the name on the dot, which in this
+     * case is unwanted. So in order to mitigate that dots are replaces with a
+     * character which are disallowed in job names and have no special meaning
+     * in input fields, e.g. hash tag (#).
+     *
+     * @param name Job name to be escaped before insertion into HTML input name
+     * @return Escaped job name
+     */
+    public static String escapeJobName(String name) {
+        // For a list of forbidden job name characters, see jenkins.model.Jenkins#checkGoodName()
+        return name.replaceAll("\\.", "#");
     }
 
 }
