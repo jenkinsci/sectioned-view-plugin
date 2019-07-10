@@ -29,9 +29,7 @@ THE SOFTWARE.
             <j:forEach var="item" items="${items}">
                 <j:if test="${descriptor.isFolder(item)}">
                     <j:set var="itemName" value="${prefix == ''?'':prefix+'$'}${item.name}"/>
-                    <j:set var="escapeRegEx" value="\."/>
-                    <j:set var="replaceString" value="_"/>
-                    <j:set var="name" value="sections.${h.getRelativeNameFrom(item, it.ownerItemGroup, false).replaceAll(escapeRegEx, replaceString)}"/>
+                    <j:set var="name" value="sections.${descriptor.escapeJobName(h.getRelativeNameFrom(item, it.ownerItemGroup, false))}"/>
                     items['${itemName}'] = new YAHOO.widget.HTMLNode('&lt;input type="checkbox" name="${name}" '+has("${itemName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(item.name)}&lt;/label&gt;', ${parentNode}, false);
                     <j:if test="${item.items != null}">
                         <local:add-children parentNode="items['${itemName}']" items="${item.items}" prefix="${itemName}"/>

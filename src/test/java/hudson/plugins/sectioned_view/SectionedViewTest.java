@@ -2,12 +2,18 @@ package hudson.plugins.sectioned_view;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlForm;
+import com.gargoylesoftware.htmlunit.html.HtmlInput;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.markup.RawHtmlMarkupFormatter;
 import hudson.model.Descriptor;
 import hudson.model.ItemGroup;
@@ -16,6 +22,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.Issue;
 import org.jvnet.hudson.test.JenkinsRule;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class SectionedViewTest {
 
@@ -72,6 +81,28 @@ public class SectionedViewTest {
         JenkinsRule.WebClient wc = j.createWebClient();
         String content = wc.getPage(sw).getWebResponse().getContentAsString();
         assertThat(content, containsString(MARKUP));
+    }
+
+    @Test @Issue("JENKINS-58418")
+    public void jobWithDotInNameCollision() throws Exception {
+        j.createFreeStyleProject("foo.bar");
+        j.createFreeStyleProject("foo_bar");
+        SectionedView sw = new SectionedView("sw");
+        j.jenkins.addView(sw);
+        sw.setSections(Arrays.asList(
+                new JobGraphsSection("JobGraph", SectionedViewSection.Width.FULL, SectionedViewSection.Positioning.CENTER),
+                new ListViewSection("List", SectionedViewSection.Width.FULL, SectionedViewSection.Positioning.CENTER)
+        ));
+
+        JenkinsRule.WebClient wc = j.createWebClient();
+        wc.getOptions().setThrowExceptionOnFailingStatusCode(false);
+
+        HtmlPage configPage = wc.getPage(sw, "configure");
+        HtmlForm form = configPage.getFormByName("viewConfig");
+        HtmlButton saveButton = j.getButtonByCaption(form,"OK");
+        HtmlPage responsePage = saveButton.click();
+
+        assertThat(responsePage.getWebResponse().getStatusCode(), is(200));
     }
 }
 
