@@ -1,5 +1,9 @@
 # Changelog
 
+### Next Release
+
+* [JENKINS-58418](https://issues.jenkins-ci.org/browse/JENKINS-58418) Fixed escaping of similar job names that could cause saving of view to throw an exception ([PR #25](https://github.com/jenkinsci/sectioned-view-plugin/pull/25))
+
 ### Release 1.25 - 27 Aug 2018
 
 * [JENKINS-52399](https://issues.jenkins-ci.org/browse/JENKINS-52399) Add Folder Listing Section
