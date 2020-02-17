@@ -197,8 +197,9 @@ public class SectionedView extends View {
 	@Override
 	public void onJobRenamed(Item item, String oldName, String newName) {
 		for (SectionedViewSection section : sections) {
-	        if(section.jobNames.remove(oldName) && newName!=null)
-	        	section.jobNames.add(newName);
+			if (section.jobNames != null && section.jobNames.remove(oldName) && newName!=null) {
+				section.jobNames.add(newName);
+			}
 		}
 	}
 }
