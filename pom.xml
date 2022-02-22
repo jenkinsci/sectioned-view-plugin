@@ -3,7 +3,8 @@
     <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>2.23</version>
+    <version>4.35</version>
+    <relativePath />
   </parent>
 
   <artifactId>sectioned-view</artifactId>
@@ -48,8 +49,8 @@
   </pluginRepositories>
 
   <properties>
-    <jenkins.version>1.580.3</jenkins.version>
-    <java.version>6</java.version>
+    <jenkins.version>2.289.1</jenkins.version>
+    <java.level>8</java.level>
     <findbugs.failOnError>false</findbugs.failOnError>
   </properties>
 
@@ -57,45 +58,40 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>1.10.19</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
-      <version>1.2.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>junit</artifactId>
-      <version>1.19</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>antisamy-markup-formatter</artifactId>
-      <version>1.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <optional>true</optional>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>cloudbees-folder</artifactId>
-      <version>5.18</version>
     </dependency>
-
   </dependencies>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.jenkins.tools.bom</groupId>
+        <artifactId>bom-2.289.x</artifactId>
+        <version>1148.v7261f385f859</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
 

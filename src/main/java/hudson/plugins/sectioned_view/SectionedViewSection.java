@@ -23,6 +23,7 @@
  */
 package hudson.plugins.sectioned_view;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.model.Describable;
@@ -47,8 +48,6 @@ import java.util.regex.PatternSyntaxException;
 
 import jenkins.model.Jenkins;
 import org.kohsuke.stapler.Stapler;
-
-import javax.annotation.Nonnull;
 
 public abstract class SectionedViewSection implements ExtensionPoint, Describable<SectionedViewSection> {
 
@@ -91,7 +90,8 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
     }
 
-    public @Nonnull String getName() {
+    @NonNull
+    public String getName() {
         return name == null ? "" : name;
     }
 
