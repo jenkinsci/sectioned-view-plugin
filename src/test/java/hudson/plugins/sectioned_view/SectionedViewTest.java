@@ -3,6 +3,7 @@ package hudson.plugins.sectioned_view;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.matchesRegex;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
@@ -77,7 +78,7 @@ public class SectionedViewTest {
 
         JenkinsRule.WebClient wc = j.createWebClient();
         String content = wc.getPage(sw).getWebResponse().getContentAsString();
-        assertThat(content, containsString(MARKUP));
+        assertThat(content, containsString("<div><b><a href=\"adsf\" rel=\"nofollow noopener noreferrer\">LVS</a></b></div>"));
     }
 
     @Test @Issue("JENKINS-58418")
