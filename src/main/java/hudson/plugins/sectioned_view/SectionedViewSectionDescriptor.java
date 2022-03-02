@@ -71,8 +71,7 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
                 throw new FormException("Regular expression is invalid: " + e.getMessage(), e, "includeRegex");
             }
         } else {
-            section.includeRegex = null;
-            section.includePattern = null;
+            section.setIncludeRegex(null);
         }
 
         section.jobNames.clear();

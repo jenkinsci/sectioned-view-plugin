@@ -73,6 +73,9 @@ public class TextSection extends SectionedViewSection {
 
         @Override
         public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+            if (req == null) {
+                throw new IllegalArgumentException("'req' must not be null");
+            }
             return (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
         }
 

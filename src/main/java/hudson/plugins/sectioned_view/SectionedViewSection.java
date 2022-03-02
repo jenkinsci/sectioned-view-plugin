@@ -105,7 +105,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
     public void setIncludeRegex(String regex) throws PatternSyntaxException {
         includeRegex = regex;
-        includePattern = Pattern.compile(regex);
+        includePattern = (regex != null ? Pattern.compile(regex) : null);
     }
 
     public Iterable<ViewJobFilter> getJobFilters() {
