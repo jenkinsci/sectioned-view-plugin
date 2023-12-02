@@ -103,8 +103,7 @@ public class FolderViewSection extends SectionedViewSection {
     }
 
     private boolean filter(TopLevelItem item, int baseFolderLevel) {
-        boolean allow = true;
-        if (!(item instanceof Folder) & hideJobs) allow = false;
+        boolean allow = !(!(item instanceof Folder) & hideJobs);
         if (regexFilter != null && !regexFilter.isEmpty() && !regexFilterPattern.matcher(item.getName()).matches()) allow = false;
         if (folderLevels != null && item.getFullName().length() - item.getFullName().replace("/", "").length() >
                 (folderLevels + baseFolderLevel)) allow = false;

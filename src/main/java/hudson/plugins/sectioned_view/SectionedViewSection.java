@@ -23,6 +23,7 @@
  */
 package hudson.plugins.sectioned_view;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.model.Describable;
@@ -48,8 +49,6 @@ import java.util.regex.PatternSyntaxException;
 import jenkins.model.Jenkins;
 import org.kohsuke.stapler.Stapler;
 
-import javax.annotation.Nonnull;
-
 public abstract class SectionedViewSection implements ExtensionPoint, Describable<SectionedViewSection> {
 
     public SectionedViewSection(String name, Width width, Positioning alignment) {
@@ -57,7 +56,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.width = width;
         this.alignment = alignment;
         determineCss();
-        initJobFilters();
+        this.jobFilters = new DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>>(Saveable.NOOP, new ArrayList<ViewJobFilter>());
     }
 
     /**
@@ -72,6 +71,12 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
      * Include regex string.
      */
     String includeRegex;
+    
+    /**
+     * execute regex on all jobs
+     */
+    
+    boolean executingRegexOnAllJobs;
 
     /**
      * Compiled include pattern from the includeRegex string.
@@ -91,7 +96,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
     }
 
-    public @Nonnull String getName() {
+    public @NonNull String getName() {
         return name == null ? "" : name;
     }
 
@@ -108,6 +113,14 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         includePattern = Pattern.compile(regex);
     }
 
+    public boolean isExecutingRegexOnAllJobs() {
+        return executingRegexOnAllJobs;
+    }
+    
+    public void setExecutingRegexOnAllJobs(boolean value) {
+        this.executingRegexOnAllJobs = value;
+    }
+    
     public Iterable<ViewJobFilter> getJobFilters() {
         return jobFilters;
     }
@@ -175,7 +188,13 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     public Collection<TopLevelItem> getItems(ItemGroup<? extends TopLevelItem> itemGroup) {
         SortedSet<String> names = new TreeSet<String>(jobNames);
 
-        Collection<? extends TopLevelItem> topLevelItems = itemGroup.getItems();
+        Collection<? extends TopLevelItem> topLevelItems = null;
+        if(executingRegexOnAllJobs) {
+            topLevelItems = Items.getAllItems(itemGroup, TopLevelItem.class);
+        } else {
+            topLevelItems = itemGroup.getItems();
+        }
+        
         if (includePattern != null) {
             for (TopLevelItem item : topLevelItems) {
                 String itemName = item.getRelativeNameFrom(itemGroup);

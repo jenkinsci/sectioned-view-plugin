@@ -4,16 +4,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.htmlunit.html.HtmlButton;
+import org.htmlunit.html.HtmlElement;
+import org.htmlunit.html.HtmlForm;
+import org.htmlunit.html.HtmlInput;
+import org.htmlunit.html.HtmlPage;
 import hudson.markup.RawHtmlMarkupFormatter;
 import hudson.model.Descriptor;
 import hudson.model.ItemGroup;
@@ -69,8 +69,7 @@ public class SectionedViewTest {
 
     @Test @Issue("JENKINS-44987")
     public void htmlUI() throws Exception {
-        String MARKUP = "<div><b><a href=\"adsf\">LVS</a></b></div>";
-
+        String MARKUP = "<div><b><a href=\"adsf\" rel=\"nofollow noopener noreferrer\">LVS</a></b></div>";
         j.jenkins.setMarkupFormatter(new RawHtmlMarkupFormatter(false));
 
         SectionedView sw = new SectionedView("SW");
