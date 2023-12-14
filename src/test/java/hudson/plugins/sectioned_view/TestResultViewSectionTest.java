@@ -1,7 +1,5 @@
 package hudson.plugins.sectioned_view;
 
-import static org.junit.Assert.*;
-
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
@@ -15,7 +13,10 @@ import org.jvnet.hudson.test.TestBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author ogondza.
@@ -23,15 +24,17 @@ import java.util.regex.Pattern;
 public class TestResultViewSectionTest {
 
     public @Rule JenkinsRule j = new JenkinsRule();
-    
+
     @Test
     public void showIt() throws Exception {
         FreeStyleProject p = j.createFreeStyleProject("test_project");
-        p.getPublishersList().add(new JUnitResultArchiver("*.xml", false, null, 1));
+        p.getPublishersList().add(new JUnitResultArchiver("*.xml"));
         p.getBuildersList().add(new TestBuilder() {
             @Override
             public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-                build.getWorkspace().child("result.xml").copyFrom(TestResultViewSectionTest.class.getResourceAsStream("junit-report-1472.xml"));
+                Objects.requireNonNull(build.getWorkspace()).child("result.xml").
+                        copyFrom(Objects.requireNonNull(TestResultViewSectionTest.class.
+                                getResourceAsStream("junit-report-1472.xml")));
                 return true;
             }
         });
