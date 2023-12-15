@@ -56,7 +56,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
         this.width = width;
         this.alignment = alignment;
         determineCss();
-        initJobFilters();
+        this.jobFilters = new DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>>(Saveable.NOOP, new ArrayList<ViewJobFilter>());
     }
 
     /**
