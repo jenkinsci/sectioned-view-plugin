@@ -51,9 +51,9 @@ THE SOFTWARE.
         <f:entry title="${%Regular expression}" field="includeRegex">
           <f:textbox />
         </f:entry>
-		<f:entry title="${%Query all jobs?}" field="executingRegexOnAllJobs">
+		<f:entry title="${%Recurse in subfolders}" field="executingRegexOnAllJobs">
 		    <f:checkbox/>
-		</f:entry>        
+		</f:entry>
       </f:optionalBlock>
 
 	  <j:if test="${descriptor.hasJobFilterExtensions()}">
@@ -77,6 +77,6 @@ THE SOFTWARE.
                          deleteCaption="${%Remove column}"/>
         </f:block>
       </f:section>
-      
+
     </f:advanced>
 </j:jelly>
