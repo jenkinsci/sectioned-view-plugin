@@ -73,7 +73,8 @@ public class ListViewSection extends SectionedViewSection {
             Descriptor<ListViewColumn> des = all.find(d);
             if (des  != null) {
                 try {
-                    r.add(des.newInstance(null, null));
+                    JSONObject json = new JSONObject();
+                    r.add(des.newInstance(null, json));
                 } catch (FormException e) {
                     LOGGER.log(Level.WARNING, "Failed to instantiate "+des.clazz,e);
                 }
