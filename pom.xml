@@ -61,8 +61,9 @@
 
   <properties>
     <jenkins.version>2.401.3</jenkins.version>
-    <java.version>6</java.version>
     <findbugs.failOnError>false</findbugs.failOnError>
+    <spotbugs.effort>Max</spotbugs.effort>
+    <spotbugs.threshold>Low</spotbugs.threshold>
   </properties>
 
   <dependencies>
