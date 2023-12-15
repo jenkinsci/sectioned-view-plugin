@@ -58,6 +58,9 @@ THE SOFTWARE.
         <f:entry title="${%Regular expression}" field="includeRegex">
           <f:textbox />
         </f:entry>
+		<f:entry title="${%Query all jobs?}" field="executingRegexOnAllJobs">
+		    <f:checkbox/>
+		</f:entry>        
       </f:optionalBlock>
       
     </f:advanced>
