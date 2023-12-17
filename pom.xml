@@ -10,15 +10,7 @@
   <artifactId>sectioned-view</artifactId>
   <packaging>hpi</packaging>
   <name>Sectioned View Plugin</name>
-<<<<<<< HEAD
-<<<<<<< HEAD
   <version>${revision}${changelist}</version>
-=======
-  <version>1.26</version>
->>>>>>> f6c7e70 ([maven-release-plugin] prepare release sectioned-view-1.26)
-=======
-  <version>1.27-SNAPSHOT</version>
->>>>>>> c1114af ([maven-release-plugin] prepare for next development iteration)
   <url>http://wiki.jenkins-ci.org/display/JENKINS/Sectioned+View+Plugin</url>
   <developers>
     <developer>
