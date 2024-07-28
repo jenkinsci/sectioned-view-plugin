@@ -53,7 +53,7 @@ THE SOFTWARE.
                     var values = (e.getAttribute("values") || "").split(",");
 
                     function has(v) {
-                        return values.include(v) ? 'checked="true" ' : "";
+                        return values.includes(v) ? 'checked="true" ' : "";
                     }
                     var items = {};
 

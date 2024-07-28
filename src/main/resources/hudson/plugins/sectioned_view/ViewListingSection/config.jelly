@@ -48,7 +48,7 @@ THE SOFTWARE.
 
           var values = (e.getAttribute("values") || "").split(",");
           function has(v) {
-            return values.include(v) ? 'checked="checked" ' : "";
+            return values.includes(v) ? 'checked="checked" ' : "";
           }
           var views = {};
           <local:add-children parentView="root" views="${it.owner.views}" prefix=""/>
