@@ -32,6 +32,8 @@ import hudson.model.Hudson;
 import hudson.model.View;
 import hudson.model.ViewGroup;
 import hudson.util.FormValidation;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -60,18 +62,8 @@ public class ViewListingSection extends SectionedViewSection {
         return views;
     }
 
-    /**
-     * Used for generating the config UI.
-     */
-    public String getViewsString() {
-        if (views == null || views.isEmpty()) return "";
-        
-        char delim = ',';
-        // Build string connected with delimiter, quoting as needed
-        StringBuilder buf = new StringBuilder();
-        for (String value : views)
-            buf.append(delim).append(value);
-        return buf.substring(1);
+    public boolean isChecked(String viewName) {
+        return views.contains(viewName);
     }
 
     public void setColumns(int columns) {

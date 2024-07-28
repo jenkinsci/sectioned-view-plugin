@@ -22,20 +22,30 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:local="local">
-
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:sv="/lib/sectioned_view" xmlns:f="/lib/form"  xmlns:local="local" xmlns:l="/lib/layout">
+  <st:adjunct includes="hudson.plugins.sectioned_view.sectioned-view-config"/>
     <d:taglib uri="local">
-        <d:tag name="add-children">
-            <j:forEach var="item" items="${items}">
-                <j:if test="${descriptor.isFolder(item)}">
-                    <j:set var="itemName" value="${prefix == ''?'':prefix+'$'}${item.name}"/>
-                    <j:set var="name" value="sections.${descriptor.escapeJobName(h.getRelativeNameFrom(item, it.ownerItemGroup, false))}"/>
-                    items['${itemName}'] = new YAHOO.widget.HTMLNode('&lt;input type="checkbox" name="${name}" '+has("${itemName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(item.name)}&lt;/label&gt;', ${parentNode}, false);
-                    <j:if test="${item.items != null}">
-                        <local:add-children parentNode="items['${itemName}']" items="${item.items}" prefix="${itemName}"/>
-                    </j:if>
+        <d:tag name="tree-view">
+          <j:forEach var="item" items="${items}">
+              <div class="sectioned-view-tree__container">
+                <j:set var="name" value="sections.${descriptor.escapeJobName(h.getRelativeNameFrom(item, it.ownerItemGroup, false))}"/>
+                <j:set var="subItems" value="${descriptor.getAllFolders(item)}"/>
+                <div class="sectioned-view-tree__row">
+                  <f:checkbox name="${name}" title="${item.name}" checked="${instance.isChecked(item, it.ownerItemGroup)}"/>
+                  <j:if test="${subItems.size() gt 0}">
+                    <button type="button" class="jenkins-button sectioned-view-tree__button" data-hidden="true">
+                      <l:icon src="symbol-chevron-down" class="icon-sm"/>
+                    </button>
+                  </j:if>
+                </div>
+
+                <j:if test="${subItems.size() gt 0}">
+                  <div class="jenkins-!-margin-left-3 sectioned-view-tree jenkins-hidden" data-hidden="true">
+                    <local:tree-view items="${subItems}"/>
+                  </div>
                 </j:if>
-            </j:forEach>
+              </div>
+          </j:forEach>
         </d:tag>
     </d:taglib>
 
@@ -44,40 +54,9 @@ THE SOFTWARE.
             <f:textbox name="sections.name" value="${instance.name}"/>
         </f:entry>
         <f:entry title="Folders">
-            <div class="yahooTree folders-tree" style="border: 1px solid #ccc; height: 20em; overflow:auto;" values="${instance.getSelectedFoldersString(it.ownerItemGroup)}"/>
-            <script>
-                hudsonRules["DIV.folders-tree"] = function(e) {
-                    var tree = new YAHOO.widget.TreeView(e);
-                    var rootNode = tree.getRoot();
-
-                    var values = (e.getAttribute("values") || "").split(",");
-
-                    function has(v) {
-                        return values.include(v) ? 'checked="true" ' : "";
-                    }
-                    var items = {};
-
-                    <local:add-children parentNode="rootNode" items="${descriptor.getAvailableFolders(it.ownerItemGroup, it)}" prefix=""/>
-
-                    tree.draw();
-                    <!--
-                      force the rendering of HTML, so that input fields are there
-                      even when the form is submitted without this tree expanded.
-                    -->
-                    tree.expandAll();
-                    tree.collapseAll();
-
-                    <!--
-                      cancel the event.
-
-                      from http://yuilibrary.com/forum/viewtopic.php?f=89&t=8209&p=26239&hilit=HTMLNode#p26239
-                      "To prevent toggling and allow the link to work, add a listener to the clickEvent on that tree and simply return false"
-                    -->
-                    tree.subscribe("clickEvent", function(node) {
-                        return false;
-                    });
-                };
-            </script>
+          <div class="jenkins-input sectioned-view-tree">
+            <local:tree-view items="${descriptor.getAllFolders(it.ownerItemGroup)}"/>
+          </div>
         </f:entry>
         <f:advanced>
             <f:entry field="alignment" title="${%Align}">
