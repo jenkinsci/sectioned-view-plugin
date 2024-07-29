@@ -24,15 +24,29 @@ THE SOFTWARE.
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:local="local">
   <d:taglib uri="local">
-    <d:tag name="add-children">
+    <d:tag name="tree-view">
       <j:forEach var="view" items="${views}">
-        <j:set var="viewName" value="${prefix == ''?'':prefix+'$'}${view.viewName}"/>
-        views['${viewName}'] = new YAHOO.widget.HTMLNode('&lt;input type="checkbox" name="views" json="${viewName}" '+has("${viewName}")+'/&gt;&lt;label class="attach-previous"&gt;${h.jsStringEscape(view.viewName)}&lt;/label&gt;', ${parentView}, false);
-        <j:if test="${view.views != null}">
-          <local:add-children parentView="views['${viewName}']" views="${view.views}" prefix="${viewName}"/>
-        </j:if>
+        <div class="sectioned-view-tree__container">
+          <j:set var="viewName" value="${prefix == ''?'':prefix+'$'}${view.viewName}"/>
+          <j:set var="subViews" value="${view.views}"/>
+          <div class="sectioned-view-tree__row">
+            <f:checkbox name="views" title="${view.viewName}" checked="${instance.isChecked(viewName)}" json="${viewName}"/>
+            <j:if test="${subViews.size() gt 0}">
+              <button type="button" class="jenkins-button sectioned-view-tree__button" data-hidden="true">
+                <l:icon src="symbol-chevron-down" class="icon-sm"/>
+              </button>
+            </j:if>
+          </div>
+
+          <j:if test="${subViews.size() gt 0}">
+            <div class="jenkins-!-margin-left-3 sectioned-view-tree jenkins-hidden" data-hidden="true">
+              <local:tree-view views="${view.views}" prefix="${viewName}"/>
+            </div>
+          </j:if>
+        </div>
       </j:forEach>
     </d:tag>
+
   </d:taglib>
 
   <f:nested>
@@ -40,38 +54,9 @@ THE SOFTWARE.
       <f:textbox name="sections.name" value="${instance.name}"/>
     </f:entry>
     <f:entry title="${%Views}" field="views">
-      <div class="yahooTree views-tree" style="border: 1px solid gray; height: 10em; overflow:auto;" values="${instance.viewsString}" />
-      <script>
-        hudsonRules["DIV.views-tree"] = function(e) {
-          var tree = new YAHOO.widget.TreeView(e);
-          var root = tree.getRoot();
-
-          var values = (e.getAttribute("values") || "").split(",");
-          function has(v) {
-            return values.includes(v) ? 'checked="checked" ' : "";
-          }
-          var views = {};
-          <local:add-children parentView="root" views="${it.owner.views}" prefix=""/>
-
-          tree.draw();
-          <!--
-            force the rendering of HTML, so that input fields are there
-            even when the form is submitted without this tree expanded.
-          -->
-          tree.expandAll();
-          tree.collapseAll();
-
-          <!--
-            cancel the event.
-
-            from http://yuilibrary.com/forum/viewtopic.php?f=89&t=8209&p=26239&hilit=HTMLNode#p26239
-            "To prevent toggling and allow the link to work, add a listener to the clickEvent on that tree and simply return false"
-          -->
-          tree.subscribe("clickEvent", function(node) {
-              return false;
-          });
-        };
-      </script>
+      <div class="jenkins-input sectioned-view-tree">
+        <local:tree-view views="${it.owner.views}" prefix=""/>
+      </div>
     </f:entry>
     <f:advanced>
       <f:entry field="alignment" title="${%Align}">

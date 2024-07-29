@@ -1,0 +1,23 @@
+.sectioned-view-tree, .sectioned-view-tree__container {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.sectioned-view-tree__button {
+  min-height: 20px;
+  height: 20px;
+  padding: 0.5rem 0.3rem
+}
+
+.sectioned-view-tree__row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.sectioned-view-tree__button[data-hidden=false] {
+  rotate: 180deg;
+}
