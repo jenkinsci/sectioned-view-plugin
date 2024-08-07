@@ -1,6 +1,6 @@
 # Changelog
 
-### Release 1.26 - 15 Dec 2023
+### Release 1.27 - 06 Aug 2024
 
 * Run Jenkins Security Scan with Java 8 ([PR #40](https://github.com/jenkinsci/sectioned-view-plugin/pull/40))
 * Enable Jenkins Security Scan ([PR #39](https://github.com/jenkinsci/sectioned-view-plugin/pull/39))
