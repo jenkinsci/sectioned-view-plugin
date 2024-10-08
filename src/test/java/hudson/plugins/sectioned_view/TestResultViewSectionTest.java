@@ -27,7 +27,7 @@ public class TestResultViewSectionTest {
     @Test
     public void showIt() throws Exception {
         FreeStyleProject p = j.createFreeStyleProject("test_project");
-        p.getPublishersList().add(new JUnitResultArchiver("*.xml", false, null, 1));
+        p.getPublishersList().add(new JUnitResultArchiver("*.xml"));
         p.getBuildersList().add(new TestBuilder() {
             @Override
             public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {

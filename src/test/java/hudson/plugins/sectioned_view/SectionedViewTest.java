@@ -4,27 +4,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.markup.RawHtmlMarkupFormatter;
 import hudson.model.Descriptor;
+import hudson.model.FreeStyleProject;
 import hudson.model.ItemGroup;
 import hudson.util.DescribableList;
+import java.util.Arrays;
+import org.htmlunit.html.HtmlButton;
+import org.htmlunit.html.HtmlForm;
+import org.htmlunit.html.HtmlPage;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.Issue;
 import org.jvnet.hudson.test.JenkinsRule;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 public class SectionedViewTest {
 
@@ -32,8 +29,8 @@ public class SectionedViewTest {
 
     @Test @Issue("JENKINS-37174")
     public void doNotEnumerateItemsRepeatedly() throws Exception {
-        j.createFreeStyleProject("show");
-        j.createFreeStyleProject("hide");
+        FreeStyleProject show = j.createFreeStyleProject();
+        FreeStyleProject hide = j.createFreeStyleProject();
 
         SectionedView sw = new SectionedView("sw");
         j.jenkins.addView(sw);
@@ -46,18 +43,18 @@ public class SectionedViewTest {
         sections.add(lvs);
         sections.add(trvs);
         for (SectionedViewSection section : sections) {
-            section.setIncludeRegex(".*show.*");
+            section.setIncludeRegex(".*" + show.getName() + ".*");
         }
 
         JenkinsRule.WebClient wc = j.createWebClient();
         String content = wc.getPage(j.jenkins).getWebResponse().getContentAsString();
-        assertThat(content, containsString("show"));
-        assertThat(content, containsString("hide"));
+        assertThat(content, containsString(show.getName()));
+        assertThat(content, containsString(hide.getName()));
 
         content = wc.getPage(sw).getWebResponse().getContentAsString();
 
-        assertThat(content, containsString("show"));
-        assertThat(content, not(containsString("hide")));
+        assertThat(content, containsString(show.getName()));
+        assertThat(content, not(containsString(hide.getName())));
         assertThat(content, containsString("jgs"));
         assertThat(content, containsString("lvs"));
         assertThat(content, containsString("trvs"));
@@ -69,7 +66,7 @@ public class SectionedViewTest {
 
     @Test @Issue("JENKINS-44987")
     public void htmlUI() throws Exception {
-        String MARKUP = "<div><b><a href=\"adsf\">LVS</a></b></div>";
+        String MARKUP = "<div><b><a href=\"adsf\" rel=\"nofollow noopener noreferrer\">LVS</a></b></div>";
 
         j.jenkins.setMarkupFormatter(new RawHtmlMarkupFormatter(false));
 
