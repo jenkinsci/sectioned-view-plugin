@@ -1,6 +1,6 @@
 package hudson.plugins.sectioned_view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
@@ -35,8 +35,8 @@ public class TestResultViewSectionTest {
                 return true;
             }
         });
-        j.assertBuildStatus(Result.UNSTABLE, p.scheduleBuild2(0).get());
-        j.assertBuildStatus(Result.UNSTABLE, p.scheduleBuild2(0).get());
+        j.waitForCompletion(j.buildAndAssertStatus(Result.UNSTABLE, p));
+        j.waitForCompletion(j.buildAndAssertStatus(Result.UNSTABLE, p));
 
         SectionedView sectionedView = new SectionedView("sw");
         j.jenkins.addView(sectionedView);
@@ -44,8 +44,12 @@ public class TestResultViewSectionTest {
         tests.includeRegex = ".*";
         tests.includePattern = Pattern.compile(".*");
         sectionedView.setSections(Collections.singletonList(tests));
+        sectionedView.save();
 
-        String out = j.createWebClient().getPage(sectionedView).getWebResponse().getContentAsString();
+        String out;
+        try (JenkinsRule.WebClient wc = j.createWebClient()) {
+            out = wc.getPage(sectionedView).getWebResponse().getContentAsString();
+        }
 
         assertTrue(out, out.contains("tests view"));
         assertTrue(out, out.contains("test_project"));
