@@ -59,6 +59,16 @@ public class FolderViewSection extends SectionedViewSection {
         this.setRegexFilter(regexFilter);
     }
 
+    public boolean isChecked(Folder folder, ItemGroup itemGroup) {
+        Collection<TopLevelItem> selectedItems = getItems(itemGroup);
+        for (TopLevelItem item: selectedItems) {
+            if (folder == item) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<List<Node>> getColumnsWithContent(ItemGroup<? extends TopLevelItem> itemGroup, int baseFolderLevel) {
         List<List<Node>> columns = new ArrayList<List<Node>>();
         for (int i = 0; i < viewColumns; i++) {
@@ -220,26 +230,9 @@ public class FolderViewSection extends SectionedViewSection {
             return FormValidation.error("Levels must be a number greater than 0");
         }
 
-        public boolean isFolder(TopLevelItem item) {
-            return item instanceof Folder;
-        }
-
-        public int baseFolderLevel(SectionedView sectionedView) {
-            return calculateBaseFolderLevel(sectionedView);
-        }
-
-        public List<Folder> getAvailableFolders(ItemGroup itemGroup, SectionedView sectionedView) {
-            Collection<Item> items = itemGroup.getItems();
-            List<Folder> folders = new ArrayList<Folder>();
-            int baseFolderLevel = baseFolderLevel(sectionedView);
-            for (Item item : items) {
-                if (item instanceof Folder) {
-                    if (folderLevel(item.getFullName()) == (0 + baseFolderLevel)) {
-                        folders.add((Folder)item);
-                    }
-                }
-            }
-            return folders;
+        public Collection<Item> getAllFolders(ItemGroup<Item> itemGroup) {
+            Collection<Item> items = itemGroup.getItems(item -> item instanceof Folder);
+            return items;
         }
     }
 
