@@ -1,5 +1,11 @@
 # Changelog
 
+### Release 1.27 - 06 Aug 2024
+
+* Run Jenkins Security Scan with Java 8 ([PR #40](https://github.com/jenkinsci/sectioned-view-plugin/pull/40))
+* Enable Jenkins Security Scan ([PR #39](https://github.com/jenkinsci/sectioned-view-plugin/pull/39))
+* [JENKINS-73571](https://issues.jenkins.io/browse/JENKINS-73571) Replace method include() (not working with Jenkins >= 2.426.x) with the includes() (pure javascript method that should work with all modern browsers) ([PR #37](https://github.com/jenkinsci/sectioned-view-plugin/pull/37))
+
 ### Release 1.26 - 15 Dec 2023
 
 * [JENKINS-45038](https://issues.jenkins-ci.org/browse/JENKINS-45038) Add "Recurse in subfolders" option to sectioned view plugin ([PR #19](https://github.com/jenkinsci/sectioned-view-plugin/pull/19))

@@ -33,7 +33,6 @@ import hudson.model.ItemGroup;
 import hudson.model.Items;
 import hudson.model.Saveable;
 import hudson.model.TopLevelItem;
-import hudson.util.CaseInsensitiveComparator;
 import hudson.util.DescribableList;
 import hudson.util.EnumConverter;
 import hudson.views.ViewJobFilter;
@@ -62,7 +61,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     /**
      * List of job names. This is what gets serialized.
      */
-    /*package*/ final SortedSet<String> jobNames = new TreeSet<String>(CaseInsensitiveComparator.INSTANCE);
+    /*package*/ final SortedSet<String> jobNames = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     /*package*/ DescribableList<ViewJobFilter, Descriptor<ViewJobFilter>> jobFilters;
 
     private String name;

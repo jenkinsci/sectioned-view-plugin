@@ -23,6 +23,7 @@
  */
 package hudson.plugins.sectioned_view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.DescriptorExtensionList;
 import hudson.Extension;
 import hudson.model.Descriptor;
@@ -65,6 +66,7 @@ public class ListViewSection extends SectionedViewSection {
         return columns;
     }
 
+    @SuppressFBWarnings(value = "NP_NONNULL_PARAM_VIOLATION", justification = "TODO needs triage")
     public static List<ListViewColumn> getDefaultColumns() {
         ArrayList<ListViewColumn> r = new ArrayList<ListViewColumn>();
         DescriptorExtensionList<ListViewColumn, Descriptor<ListViewColumn>> all = ListViewColumn.all();
