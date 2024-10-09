@@ -17,10 +17,7 @@ import org.jvnet.hudson.test.TestBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author ogondza.
@@ -28,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 public class TestResultViewSectionTest {
 
     public @Rule JenkinsRule j = new JenkinsRule();
-
+    
     @Test
     public void showIt() throws Exception {
         assumeFalse("TODO seems to crash the test JVM in CI buidls", Functions.isWindows() && System.getenv("CI") != null);
@@ -37,9 +34,7 @@ public class TestResultViewSectionTest {
         p.getBuildersList().add(new TestBuilder() {
             @Override
             public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-                Objects.requireNonNull(build.getWorkspace()).child("result.xml").
-                        copyFrom(Objects.requireNonNull(TestResultViewSectionTest.class.
-                                getResourceAsStream("junit-report-1472.xml")));
+                build.getWorkspace().child("result.xml").copyFrom(TestResultViewSectionTest.class.getResourceAsStream("junit-report-1472.xml"));
                 return true;
             }
         });

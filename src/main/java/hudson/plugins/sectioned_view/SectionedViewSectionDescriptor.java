@@ -61,17 +61,12 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
 
     @Override
     public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
-        assert req != null;
         SectionedViewSection section = (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
-        assert section != null;
+
         if (formData.get("useincluderegex") != null) {
             JSONObject merp = formData.getJSONObject("useincluderegex");
             try {
-                String merpString = merp.getString("includeRegex");
-                assert merpString != null;
-                merpString = Util.nullify(merpString);
-                assert merpString != null;
-                section.setIncludeRegex(merpString);
+                section.setIncludeRegex(Util.nullify(merp.getString("includeRegex")));
             } catch (PatternSyntaxException e) {
                 throw new FormException("Regular expression is invalid: " + e.getMessage(), e, "includeRegex");
             }
