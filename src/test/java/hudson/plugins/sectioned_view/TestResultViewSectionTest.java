@@ -1,7 +1,9 @@
 package hudson.plugins.sectioned_view;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 
+import hudson.Functions;
 import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
@@ -26,6 +28,7 @@ public class TestResultViewSectionTest {
     
     @Test
     public void showIt() throws Exception {
+        assumeFalse("TODO seems to crash the test JVM in CI buidls", Functions.isWindows() && System.getenv("CI") != null);
         FreeStyleProject p = j.createFreeStyleProject("test_project");
         p.getPublishersList().add(new JUnitResultArchiver("*.xml"));
         p.getBuildersList().add(new TestBuilder() {
