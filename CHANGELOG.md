@@ -1,5 +1,9 @@
 # Changelog
 
+### Release 1.28 - 29 Oct 2024
+
+* Remote YUI tree view and replace with jelly based rendering ([PR #38](https://github.com/jenkinsci/sectioned-view-plugin/pull/38))
+
 ### Release 1.27 - 06 Aug 2024
 
 * Run Jenkins Security Scan with Java 8 ([PR #40](https://github.com/jenkinsci/sectioned-view-plugin/pull/40))
