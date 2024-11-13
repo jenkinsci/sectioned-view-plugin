@@ -47,11 +47,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
+import org.kohsuke.stapler.StaplerRequest2;
+import org.kohsuke.stapler.StaplerResponse2;
 
 public class SectionedView extends View {
 
@@ -147,7 +147,7 @@ public class SectionedView extends View {
 	 * Load view-specific properties here.
 	 */
 	@Override
-	protected void submit(StaplerRequest req) throws ServletException, FormException {
+	protected void submit(StaplerRequest2 req) throws ServletException, FormException {
 		initSections();
 		try {
             sections.rebuildHetero(req, req.getSubmittedForm(), Hudson
@@ -178,7 +178,7 @@ public class SectionedView extends View {
 	}
 
 	@Override
-	public Item doCreateItem(StaplerRequest req, StaplerResponse rsp)
+	public Item doCreateItem(StaplerRequest2 req, StaplerResponse2 rsp)
 			throws IOException, ServletException {
         return Hudson.getInstance().doCreateItem(req, rsp);
 	}
