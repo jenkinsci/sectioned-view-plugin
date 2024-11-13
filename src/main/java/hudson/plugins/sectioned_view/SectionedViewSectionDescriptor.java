@@ -27,14 +27,14 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import javax.servlet.ServletException;
+import jakarta.servlet.ServletException;
 
 import hudson.model.Items;
 import hudson.model.TopLevelItem;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 import hudson.Util;
 import hudson.model.Descriptor;
@@ -60,7 +60,7 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
     }
 
     @Override
-    public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+    public SectionedViewSection newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
         SectionedViewSection section = (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
 
         if (formData.get("useincluderegex") != null) {

@@ -39,7 +39,7 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class ViewListingSection extends SectionedViewSection {
 
@@ -111,7 +111,7 @@ public class ViewListingSection extends SectionedViewSection {
     public static final class DescriptorImpl extends SectionedViewSectionDescriptor {
 
         @Override
-        public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+        public SectionedViewSection newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
             int columns = formData.getInt("columns");
             if (columns <= 0) throw new FormException("Columns must be a number greater than 0", "columns");
             return (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);

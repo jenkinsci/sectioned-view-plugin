@@ -29,7 +29,7 @@ import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class TextSection extends SectionedViewSection {
 
@@ -72,7 +72,7 @@ public class TextSection extends SectionedViewSection {
     public static final class DescriptorImpl extends SectionedViewSectionDescriptor {
 
         @Override
-        public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+        public SectionedViewSection newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
             return (SectionedViewSection)req.bindJSON(getClass().getDeclaringClass(), formData);
         }
 

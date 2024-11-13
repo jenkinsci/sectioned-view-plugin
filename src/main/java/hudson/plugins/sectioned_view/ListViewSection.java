@@ -51,7 +51,7 @@ import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class ListViewSection extends SectionedViewSection {
 
@@ -75,7 +75,7 @@ public class ListViewSection extends SectionedViewSection {
             Descriptor<ListViewColumn> des = all.find(d);
             if (des  != null) {
                 try {
-                    r.add(des.newInstance(null, null));
+                    r.add(des.newInstance((StaplerRequest2) null, null));
                 } catch (FormException e) {
                     LOGGER.log(Level.WARNING, "Failed to instantiate "+des.clazz,e);
                 }
@@ -89,7 +89,7 @@ public class ListViewSection extends SectionedViewSection {
     public static final class DescriptorImpl extends SectionedViewSectionDescriptor {
 
         @Override
-        public SectionedViewSection newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+        public SectionedViewSection newInstance(StaplerRequest2 req, JSONObject formData) throws FormException {
             ListViewSection section = (ListViewSection) super.newInstance(req, formData);
 
             if (section.columns == null) {
