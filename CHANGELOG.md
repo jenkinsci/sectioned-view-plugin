@@ -1,5 +1,9 @@
 # Changelog
 
+### Release 1.29 - 14 Nov 2024
+
+* Migrate to Jakarta EE 9 ([PR #45](https://github.com/jenkinsci/sectioned-view-plugin/pull/45))
+
 ### Release 1.28 - 29 Oct 2024
 
 * Remote YUI tree view and replace with jelly based rendering ([PR #38](https://github.com/jenkinsci/sectioned-view-plugin/pull/38))
