@@ -27,10 +27,6 @@ THE SOFTWARE.
 
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-  <!-- Needed for ViewListingSection, but including these from ViewListingSection/config.jelly is too late -->
-  <l:yui module="treeview" />
-  <link rel="stylesheet" type="text/css"
-        href="${rootURL}/scripts/yui/treeview/assets/skins/sam/treeview.css" />
   <f:section title="Sections">
     <j:invokeStatic var="allSections" className="hudson.plugins.sectioned_view.SectionedViewSection" method="all"/>
     <f:block>
