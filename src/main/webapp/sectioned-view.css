@@ -67,17 +67,8 @@
   overflow: hidden;
 }
 
-.dashboard .pane {
-  padding: 0 10px 10px 10px;
-}
-
 .sectioned-view-panel-content ul {
   list-style-type: none;
   margin: 0 10px;
   padding: 10px;
 }
-
-.pane td {
-    vertical-align: top;
-}
-
