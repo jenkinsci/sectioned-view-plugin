@@ -32,8 +32,8 @@ THE SOFTWARE.
                   <p>No jobs in this section.</p>
                 </j:if>
                 <j:forEach var="job" items="${sectionItems}">
-                  <div style="float: left; margin: 0px 0px 5px 10px;">
-                    <j:set var="jobName" value="${job.displayName}"/>
+                  <div style="float: left; margin: 0px 0px 5px 1rem;">
+                    <j:set var="jobName" value="${job.fullDisplayName}"/>
                     <h3><a href="${job.shortUrl}">${jobName.length() > 33 ? jobName.substring(0, 15) + "..." + jobName.substring(jobName.length() - 15) : jobName}</a></h3>
                     <j:forEach var="a" items="${job.allActions}">
                       <sv:graph action="${a}" width="250" height="100" relativeUrl="${job.shortUrl}"/>

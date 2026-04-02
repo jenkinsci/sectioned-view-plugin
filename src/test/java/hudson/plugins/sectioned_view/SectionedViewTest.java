@@ -96,7 +96,7 @@ public class SectionedViewTest {
 
         HtmlPage configPage = wc.getPage(sw, "configure");
         HtmlForm form = configPage.getFormByName("viewConfig");
-        HtmlButton saveButton = j.getButtonByCaption(form,"OK");
+        HtmlButton saveButton = j.getButtonByCaption(form,"Save");
         HtmlPage responsePage = saveButton.click();
 
         assertThat(responsePage.getWebResponse().getStatusCode(), is(200));

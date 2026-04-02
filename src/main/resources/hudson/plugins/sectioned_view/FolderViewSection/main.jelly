@@ -44,8 +44,8 @@ THE SOFTWARE.
         <j:forEach var="column" items="${section.getColumnsWithContent(it.ownerItemGroup, section.baseFolderLevel(it))}">
           <td>
             <j:forEach var="node" items="${column}">
-              <div class="sectioned-view-panel">
-                <div class="sectioned-view-panel-header"><h4><a href="${rootURL}/${node.url}">${node.name}</a></h4></div>
+              <div class="jenkins-card sectioned-view-card">
+                <div class="jenkins-alert jenkins-alert-info jenkins-!-margin-bottom-0"><a href="${rootURL}/${node.url}">${node.name}</a></div>
                 <j:if test="${node.childNodes != null}">
                   <div class="sectioned-view-panel-content">
                     <local:list-child-nodes childNodes="${node.childNodes}"/>

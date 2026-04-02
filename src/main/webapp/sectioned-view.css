@@ -1,83 +1,31 @@
-.sectioned-view-note, .sectioned-view-warning, .sectioned-view-info, .sectioned-view-tip {
-  border-style: solid;
-  border-width: 1px;
-  padding: 10px;
-  text-align: left;
+.sectioned-view-card .jenkins-alert {
+  border-radius: 1rem;
 }
 
-.sectioned-view-note h3, .sectioned-view-warning h3, .sectioned-view-info h3, .sectioned-view-tip h3 {
+.sectioned-view-text h3 {
   margin: 0 0 5px 0;
 }
 
-.sectioned-view-note div, .sectioned-view-warning div, .sectioned-view-info div, .sectioned-view-tip div {
+.sectioned-view-text div {
   margin-left: 10px;
 }
 
-.sectioned-view-note {
-  background-color: #ffffce;
-  border-color: #f0c000;
+.sectioned-view-graph-container {
+  display: flex;
+  flex-direction: column;
+  gap:.5rem;
 }
 
-.sectioned-view-warning {
-  background-color: #ffcccc;
-  border-color: #cc0000;
-}
-
-.sectioned-view-info {
-  background-color: #d8e4f1;
-  border-color: #3c78b5;
-}
-
-.sectioned-view-tip {
-  background-color: #dfd;
-  border-color: #090;
-}
-
-.sectioned-view-panel {
-  border-color: #6699ff;
-  border-style: solid;
-  border-width: 1px;
-  margin-bottom: 10px;
-  box-shadow: 2px 2px 4px #888888;
-  border-radius: 5px;
-}
-
-.sectioned-view-panel a {
-  text-decoration: none;
-}
-
-.sectioned-view-panel .sectioned-view-panel-header {
-  background-color: #ddf;
-  padding: 5px;
-  margin: 3px;
-  text-align: center;
-  border-radius: 5px;
-}
-
-.sectioned-view-panel .sectioned-view-panel-header h4 {
-  padding: 0;
+.sectioned-view-graph {
+  background-color: var(--table-background);
   margin: 0;
-}
-
-.sectioned-view-panel .sectioned-view-panel-content {
-  padding: 5px;
-}
-
-.dashboard {
-  overflow: hidden;
-}
-
-.dashboard .pane {
-  padding: 0 10px 10px 10px;
+  padding: 0.5rem 1rem;
+  border-radius: calc(var(--table-border-radius) + 4px);
 }
 
 .sectioned-view-panel-content ul {
   list-style-type: none;
   margin: 0 10px;
   padding: 10px;
-}
-
-.pane td {
-    vertical-align: top;
 }
 

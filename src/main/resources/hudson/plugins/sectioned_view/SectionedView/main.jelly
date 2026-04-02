@@ -50,7 +50,6 @@ THE SOFTWARE.
             </j:otherwise>
           </j:choose>
           <!-- project list -->
-          <div class="pane-frame">
             <j:forEach var="section" items="${it.sections}">
               <div style="${section.css}">
                 <div style="padding: 5px; overflow: hidden;">
@@ -60,7 +59,6 @@ THE SOFTWARE.
               </div>
             </j:forEach>
             <div style="clear:both;"></div>
-          </div>
           <t:rssBar-with-iconSize/>
         </j:if>
       </div>

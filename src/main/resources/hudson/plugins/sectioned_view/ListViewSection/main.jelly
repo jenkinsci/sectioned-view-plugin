@@ -33,21 +33,20 @@ THE SOFTWARE.
 </j:if>
 
 <j:set var="columnExtensions" value="${section.columns}"/>
-<div class="pane-frame">
-<table id="projectstatus" class="sortable pane bigtable stripped-odd">
-  <tr class="header">
-    <j:forEach var="col" items="${columnExtensions}">
-      <st:include page="columnHeader.jelly" it="${col}" />
+<table id="projectstatus" class="jenkins-table sortable  ${iconSize == '16x16' ? 'jenkins-table--small' : iconSize == '24x24' ? 'jenkins-table--medium' : ''}">
+  <thead>
+    <tr>
+      <j:forEach var="col" items="${columnExtensions}">
+        <st:include page="columnHeader.jelly" it="${col}" />
+      </j:forEach>
+    </tr>
+  </thead>
+  <tbody>
+    <j:set var="itemGroup" value="${it.ownerItemGroup}"/>
+    <j:forEach var="job" items="${sectionItems}">
+      <j:set var="relativeLinkToJob" value="${h.getRelativeLinkTo(job)}"/>
+      <t:projectViewRow jobBaseUrl="${relativeLinkToJob.substring(0, relativeLinkToJob.length() - job.shortUrl.length())}"/>
     </j:forEach>
-    <th>
-      <st:nbsp/>
-    </th>
-  </tr>
-  <j:set var="itemGroup" value="${it.ownerItemGroup}"/>
-  <j:forEach var="job" items="${sectionItems}">
-    <j:set var="relativeLinkToJob" value="${h.getRelativeLinkTo(job)}"/>
-    <t:projectViewRow jobBaseUrl="${relativeLinkToJob.substring(0, relativeLinkToJob.length() - job.shortUrl.length())}"/>
-  </j:forEach>
+  </tbody>
 </table>
-</div>
 </j:jelly>

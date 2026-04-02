@@ -37,9 +37,9 @@ THE SOFTWARE.
 
       <f:entry title="${%Jobs}">
         <j:forEach var="job" items="${h.getAllTopLevelItems(it.ownerItemGroup)}">
-          <f:checkbox name='sections.${descriptor.escapeJobName(job.name)}' checked="${instance.contains(job)}" />
-          <label class="attach-previous">${h.getRelativeNameFrom(job, it.ownerItemGroup, true)}</label>
-          <br/>
+          <f:entry title="${h.getRelativeNameFrom(job, it.ownerItemGroup, true)}">
+            <f:checkbox name='sections.${descriptor.escapeJobName(h.getRelativeNameFrom(job, it.ownerItemGroup, false))}' checked="${instance.contains(job, it.ownerItemGroup)}" />
+          </f:entry>
         </j:forEach>
       </f:entry>
 

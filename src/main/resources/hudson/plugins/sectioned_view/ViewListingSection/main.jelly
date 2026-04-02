@@ -45,8 +45,8 @@ THE SOFTWARE.
         <j:forEach var="viewColumn" items="${section.getNestedViewColumns(it.owner)}">
           <td>
             <j:forEach var="view" items="${viewColumn}">
-              <div class="sectioned-view-panel">
-                <div class="sectioned-view-panel-header"><h4><a href="${rootURL}/${view.viewUrl}">${view.viewName}</a></h4></div>
+              <div class="jenkins-card sectioned-view-card">
+                <div class="jenkins-alert jenkins-alert-info jenkins-!-margin-bottom-0"><a href="${rootURL}/${view.viewUrl}">${view.viewName}</a></div>
                 <j:if test="${view.views != null}">
                   <div class="sectioned-view-panel-content">
                     <local:list-sub-views subViews="${view.views}"/>

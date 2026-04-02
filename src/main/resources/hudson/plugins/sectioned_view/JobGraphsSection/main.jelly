@@ -31,10 +31,10 @@ THE SOFTWARE.
   <j:if test="${empty(sectionItems)}">
     <p>No jobs in this section.</p>
   </j:if>
-  <j:forEach var="job" items="${sectionItems}">
-    <div style="margin: 0px 0px 5px 10px;">
-      <div style="border-left: 1px #bbb solid; border-top: 1px #bbb solid; border-right: 1px #bbb solid; background-color: #eee; margin: 0; padding: 3px;"><b>${job.displayName}</b> (<a href="${job.shortUrl}">view</a>)</div>
-      <div style="border: 1px #bbb solid;">
+  <div class="sectioned-view-graph-container">
+    <j:forEach var="job" items="${sectionItems}">
+      <div class="sectioned-view-graph"><b>${job.fullDisplayName}</b> (<a href="${job.shortUrl}">view</a>)</div>
+      <div>
         <j:forEach var="a" items="${job.allActions}">
           <div style="float: left;">
             <sv:graph action="${a}" width="250" height="100" relativeUrl="${job.shortUrl}"/>
@@ -42,6 +42,6 @@ THE SOFTWARE.
         </j:forEach>
         <div style="clear: both;"></div>
       </div>
-    </div>
-  </j:forEach>
+    </j:forEach>
+  </div>
 </j:jelly>

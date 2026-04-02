@@ -23,14 +23,11 @@ THE SOFTWARE.
 -->
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
-<j:if test="${section.name.length() > 0 and !section.hasStyle()}">
-  <h2><j:out value="${app.markupFormatter.translate(section.name)}"/></h2>
-</j:if>
 <table style="border: none; margin: 0; padding: 0;">
   <tr>
     <td>
-      <div class="${section.style.cssClass}">
-        <j:if test="${section.name.length() > 0 and section.hasStyle()}">
+      <div class="sectioned-view-text jenkins-alert ${section.style.cssClass}">
+        <j:if test="${section.name.length() > 0}">
           <h3><j:out value="${app.markupFormatter.translate(section.name)}"/></h3>
         </j:if>
         <div style="white-space: normal"><j:out value="${app.markupFormatter.translate(section.text)}"/></div>
