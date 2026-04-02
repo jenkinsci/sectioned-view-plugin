@@ -80,6 +80,27 @@ public class SectionedViewTest {
         assertThat(content, containsString(MARKUP));
     }
 
+    @Test
+    public void textSectionNoneStyleDoesNotRenderAlert() throws Exception {
+        SectionedView sw = new SectionedView("sw");
+        j.jenkins.addView(sw);
+        DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>> sections =
+            (DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>>) sw.getSections();
+
+        sections.add(new TextSection("none-section", SectionedViewSection.Width.FULL,
+            SectionedViewSection.Positioning.CENTER, "plain text", TextSection.Style.NONE));
+        sections.add(new TextSection("info-section", SectionedViewSection.Width.FULL,
+            SectionedViewSection.Positioning.CENTER, "info text", TextSection.Style.INFO));
+
+        JenkinsRule.WebClient wc = j.createWebClient();
+        String content = wc.getPage(sw).getWebResponse().getContentAsString();
+
+        // NONE style should NOT have jenkins-alert class
+        assertThat(content, containsString("sectioned-view-text\""));
+        // INFO style SHOULD have jenkins-alert class
+        assertThat(content, containsString("jenkins-alert jenkins-alert-info"));
+    }
+
     @Test @Issue("JENKINS-58418")
     public void jobWithDotInNameCollision() throws Exception {
         j.createFreeStyleProject("foo.bar");
