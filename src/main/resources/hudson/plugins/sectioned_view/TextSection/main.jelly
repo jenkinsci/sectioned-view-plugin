@@ -26,7 +26,8 @@ THE SOFTWARE.
 <table style="border: none; margin: 0; padding: 0;">
   <tr>
     <td>
-      <div class="sectioned-view-text jenkins-alert ${section.style.cssClass}">
+      <j:set var="divClass" value="${section.style.cssClass != '' ? 'sectioned-view-text jenkins-alert ' + section.style.cssClass : 'sectioned-view-text'}" />
+      <div class="${divClass}">
         <j:if test="${section.name.length() > 0}">
           <h3><j:out value="${app.markupFormatter.translate(section.name)}"/></h3>
         </j:if>
