@@ -1,6 +1,5 @@
 # Jenkins Sectioned View Plugin
 
-[![Build Status](https://ci.jenkins.io/job/Plugins/job/sectioned-view-plugin/job/master/badge/icon)](https://ci.jenkins.io/job/Plugins/job/sectioned-view-plugin/job/master/)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/sectioned-view.svg)](https://plugins.jenkins.io/sectioned-view)
 [![GitHub release](https://img.shields.io/github/release/jenkinsci/sectioned-view-plugin.svg?label=changelog)](https://github.com/jenkinsci/sectioned-view-plugin/releases/latest)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/sectioned-view.svg?color=blue)](https://plugins.jenkins.io/sectioned-view)
