@@ -1,5 +1,15 @@
 # Changelog
 
+### Release 1.31 - 03 Apr 2026
+
+* UI refresh: apply Jenkins design system styling (jenkins-table, jenkins-card, jenkins-alert) ([PR #76](https://github.com/jenkinsci/sectioned-view-plugin/pull/76))
+* [JENKINS-69065](https://issues.jenkins.io/browse/JENKINS-69065) Fix same job name in different folders leading to save failure ([PR #76](https://github.com/jenkinsci/sectioned-view-plugin/pull/76))
+* [JENKINS-32942](https://issues.jenkins.io/browse/JENKINS-32942) Use fullDisplayName for jobs in folders ([PR #76](https://github.com/jenkinsci/sectioned-view-plugin/pull/76))
+* Fix TextSection Style.NONE rendering empty alert box
+* Remove dependency on commons-lang 2 ([PR #78](https://github.com/jenkinsci/sectioned-view-plugin/pull/78))
+* Bump org.jenkins-ci.plugins:plugin from 5.4 to 5.18 ([PR #76](https://github.com/jenkinsci/sectioned-view-plugin/pull/76))
+* Bump jenkins.baseline from 2.479 to 2.492 ([PR #76](https://github.com/jenkinsci/sectioned-view-plugin/pull/76))
+
 ### Release 1.30 - 04 Jan 2025
 
 * [JENKINS-75013](https://issues.jenkins.io/browse/JENKINS-75013) Remove loading of yui treeview ([PR #52](https://github.com/jenkinsci/sectioned-view-plugin/pull/52))
