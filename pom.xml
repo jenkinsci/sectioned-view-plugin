@@ -13,14 +13,6 @@
   <name>Sectioned View Plugin</name>
   <version>${revision}${changelist}</version>
   <url>http://wiki.jenkins-ci.org/display/JENKINS/Sectioned+View+Plugin</url>
-  <developers>
-    <developer>
-      <id>tbingaman</id>
-      <name>Timothy Bingaman</name>
-      <email>timothy.bingaman@gmail.com</email>
-    </developer>
-  </developers>
-
   <licenses>
     <license>
       <name>The MIT license</name>
