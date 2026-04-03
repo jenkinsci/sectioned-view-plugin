@@ -66,7 +66,7 @@ THE SOFTWARE.
         <f:enum>${it.description}</f:enum>
       </f:entry>
       <f:entry field="columns" title="${%Columns}">
-        <f:textbox default="1"/>
+        <f:number default="1" clazz="required positive-number" min="1"/>
       </f:entry>
     </f:advanced>
   </f:nested>

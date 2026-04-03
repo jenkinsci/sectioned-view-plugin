@@ -30,11 +30,8 @@ import hudson.Util;
 import hudson.model.Item;
 import hudson.model.ItemGroup;
 import hudson.model.TopLevelItem;
-import hudson.util.FormValidation;
 import jenkins.model.Jenkins;
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -212,22 +209,6 @@ public class FolderViewSection extends SectionedViewSection {
         @Override
         public String getDisplayName() {
             return "Folder Listing Section";
-        }
-
-        public FormValidation doCheckViewColumns(@QueryParameter String value) {
-            if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
-                int columns = Integer.parseInt(value);
-                if (columns > 0) return FormValidation.ok();
-            }
-            return FormValidation.error("Columns must be a number greater than 0");
-        }
-
-        public FormValidation doCheckFolderLevels(@QueryParameter String value) {
-            if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
-                int columns = Integer.parseInt(value);
-                if (columns > 0) return FormValidation.ok();
-            }
-            return FormValidation.error("Levels must be a number greater than 0");
         }
 
         public Collection<Item> getAllFolders(ItemGroup<Item> itemGroup) {

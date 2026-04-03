@@ -66,10 +66,10 @@ THE SOFTWARE.
                 <f:enum>${it.description}</f:enum>
             </f:entry>
             <f:entry field="viewColumns" title="${%Columns}">
-                <f:textbox default="1"/>
+                <f:number default="1" clazz="required positive-number" min="1"/>
             </f:entry>
             <f:entry field="folderLevels" title="${%Levels}">
-                <f:textbox default="10"/>
+                <f:number default="10" clazz="required positive-number" min="1"/>
             </f:entry>
             <f:entry field="hideJobs" title="${%Hide Jobs}">
                 <f:checkbox name="hideJobs" default="true" checked="${it.hideJobs}"/>

@@ -28,17 +28,11 @@ import java.util.Collection;
 import java.util.List;
 
 import hudson.Extension;
-import hudson.model.Hudson;
 import hudson.model.View;
 import hudson.model.ViewGroup;
-import hudson.util.FormValidation;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest2;
 
 public class ViewListingSection extends SectionedViewSection {
@@ -122,12 +116,5 @@ public class ViewListingSection extends SectionedViewSection {
             return "View Listing Section";
         }
         
-        public FormValidation doCheckColumns(@QueryParameter String value) {
-            if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
-                int columns = Integer.parseInt(value);
-                if (columns > 0) return FormValidation.ok();
-            }
-            return FormValidation.error("Columns must be a number greater than 0");
-        }
     }
 }
