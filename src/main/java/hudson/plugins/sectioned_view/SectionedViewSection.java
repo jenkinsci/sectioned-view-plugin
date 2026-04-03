@@ -28,7 +28,6 @@ import hudson.DescriptorExtensionList;
 import hudson.ExtensionPoint;
 import hudson.model.Describable;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
 import hudson.model.ItemGroup;
 import hudson.model.Items;
 import hudson.model.Saveable;
@@ -93,7 +92,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
      * Returns all the registered {@link SectionedViewSection} descriptors.
      */
     public static DescriptorExtensionList<SectionedViewSection, SectionedViewSectionDescriptor> all() {
-        return Hudson.getInstance().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
+        return Jenkins.get().<SectionedViewSection, SectionedViewSectionDescriptor>getDescriptorList(SectionedViewSection.class);
     }
 
     public @NonNull String getName() {
@@ -206,12 +205,9 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
         List<TopLevelItem> items = new ArrayList<TopLevelItem>(names.size());
         for (String n : names) {
-            Jenkins instance = Jenkins.getInstance();
-            if (instance != null) {
-                TopLevelItem item = instance.getItem(n, itemGroup, TopLevelItem.class);
-                if (item != null)
-                    items.add(item);
-            }
+            TopLevelItem item = Jenkins.get().getItem(n, itemGroup, TopLevelItem.class);
+            if (item != null)
+                items.add(item);
         }
 
         // check the filters
@@ -232,7 +228,7 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
     }
 
     public SectionedViewSectionDescriptor getDescriptor() {
-        return (SectionedViewSectionDescriptor)Hudson.getInstance().getDescriptor(getClass());
+        return (SectionedViewSectionDescriptor)Jenkins.get().getDescriptor(getClass());
     }
 
     public String getCss() {

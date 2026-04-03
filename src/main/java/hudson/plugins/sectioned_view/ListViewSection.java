@@ -27,7 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.DescriptorExtensionList;
 import hudson.Extension;
 import hudson.model.Descriptor;
-import hudson.model.Hudson;
+import jenkins.model.Jenkins;
 import hudson.model.Saveable;
 import hudson.model.Descriptor.FormException;
 import hudson.util.DescribableList;
@@ -96,7 +96,7 @@ public class ListViewSection extends SectionedViewSection {
                 section.columns = new DescribableList<ListViewColumn,Descriptor<ListViewColumn>>(Saveable.NOOP);
             }
             try {
-                section.columns.rebuildHetero(req, formData, Hudson.getInstance().<ListViewColumn,Descriptor<ListViewColumn>>getDescriptorList(ListViewColumn.class), "columns");
+                section.columns.rebuildHetero(req, formData, Jenkins.get().<ListViewColumn,Descriptor<ListViewColumn>>getDescriptorList(ListViewColumn.class), "columns");
             } catch (IOException e) {
                 throw new FormException("Error rebuilding list of columns.", e, "columns");
             }

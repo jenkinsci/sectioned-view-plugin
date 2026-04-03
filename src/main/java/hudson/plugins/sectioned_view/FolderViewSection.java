@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class FolderViewSection extends SectionedViewSection {
 
@@ -111,7 +112,7 @@ public class FolderViewSection extends SectionedViewSection {
 
     private boolean filter(TopLevelItem item, int baseFolderLevel) {
         boolean allow = true;
-        if (!(item instanceof Folder) & hideJobs) allow = false;
+        if (!(item instanceof Folder) && hideJobs) allow = false;
         if (regexFilter != null && !regexFilter.isEmpty() && !regexFilterPattern.matcher(item.getName()).matches()) allow = false;
         if (folderLevels != null && item.getFullName().length() - item.getFullName().replace("/", "").length() >
                 (folderLevels + baseFolderLevel)) allow = false;
@@ -138,9 +139,9 @@ public class FolderViewSection extends SectionedViewSection {
         return regexFilter;
     }
 
-    public void setRegexFilter(String regexFilter) {
-        this.regexFilter = regexFilter;
+    public void setRegexFilter(String regexFilter) throws PatternSyntaxException {
         this.regexFilterPattern = Pattern.compile(regexFilter);
+        this.regexFilter = regexFilter;
     }
 
     public int getViewColumns() {
@@ -201,7 +202,7 @@ public class FolderViewSection extends SectionedViewSection {
     public static final class DescriptorImpl extends SectionedViewSectionDescriptor {
 
         public DescriptorImpl() throws Exception {
-            if (Jenkins.getInstance().getPlugin("cloudbees-folder") == null) {
+            if (Jenkins.get().getPlugin("cloudbees-folder") == null) {
                 throw new Exception("Can't instantiate without CloudBees Folder plugin installed");
             }
         }

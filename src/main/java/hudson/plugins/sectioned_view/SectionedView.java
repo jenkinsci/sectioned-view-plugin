@@ -26,7 +26,7 @@ package hudson.plugins.sectioned_view;
 import hudson.Extension;
 import hudson.model.Descriptor;
 import hudson.model.HealthReport;
-import hudson.model.Hudson;
+import jenkins.model.Jenkins;
 import hudson.model.Item;
 import hudson.model.Job;
 import hudson.model.Result;
@@ -150,8 +150,8 @@ public class SectionedView extends View {
 	protected void submit(StaplerRequest2 req) throws ServletException, FormException {
 		initSections();
 		try {
-            sections.rebuildHetero(req, req.getSubmittedForm(), Hudson
-            		.getInstance().<SectionedViewSection, Descriptor<SectionedViewSection>>getDescriptorList(SectionedViewSection.class),
+            sections.rebuildHetero(req, req.getSubmittedForm(), Jenkins
+            		.get().<SectionedViewSection, Descriptor<SectionedViewSection>>getDescriptorList(SectionedViewSection.class),
             		"sections");
         } catch (IOException e) {
             throw new FormException("Error rebuilding list of sections.", e, "sections");
@@ -180,7 +180,7 @@ public class SectionedView extends View {
 	@Override
 	public Item doCreateItem(StaplerRequest2 req, StaplerResponse2 rsp)
 			throws IOException, ServletException {
-        return Hudson.getInstance().doCreateItem(req, rsp);
+        return Jenkins.get().doCreateItem(req, rsp);
 	}
 
 	@Override

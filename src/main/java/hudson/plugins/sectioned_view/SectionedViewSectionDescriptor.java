@@ -79,7 +79,7 @@ public abstract class SectionedViewSectionDescriptor extends Descriptor<Sectione
         section.jobNames.clear();
         ItemGroup<?> group = req.findAncestorObject(ItemGroup.class);
         if (group == null) {
-            group = Jenkins.getInstance();
+            group = Jenkins.get();
         }
 
         for (TopLevelItem item : Items.getAllItems(group, TopLevelItem.class)) {
