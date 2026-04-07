@@ -1,7 +1,7 @@
 package hudson.plugins.sectioned_view;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import hudson.Functions;
 import hudson.Launcher;
@@ -10,25 +10,32 @@ import hudson.model.BuildListener;
 import hudson.model.FreeStyleProject;
 import hudson.model.Result;
 import hudson.tasks.junit.JUnitResultArchiver;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.TestBuilder;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.regex.Pattern;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
 /**
  * @author ogondza.
  */
-public class TestResultViewSectionTest {
+@WithJenkins
+class TestResultViewSectionTest {
 
-    public @Rule JenkinsRule j = new JenkinsRule();
-    
+    private JenkinsRule j;
+
+    @BeforeEach
+    void beforeEach(JenkinsRule rule) {
+        j = rule;
+    }
+
     @Test
-    public void showIt() throws Exception {
-        assumeFalse("TODO seems to crash the test JVM in CI buidls", Functions.isWindows() && System.getenv("CI") != null);
+    void showIt() throws Exception {
+        assumeFalse(Functions.isWindows() && System.getenv("CI") != null, "TODO seems to crash the test JVM in CI builds");
         FreeStyleProject p = j.createFreeStyleProject("test_project");
         p.getPublishersList().add(new JUnitResultArchiver("*.xml"));
         p.getBuildersList().add(new TestBuilder() {
@@ -54,8 +61,8 @@ public class TestResultViewSectionTest {
             out = wc.getPage(sectionedView).getWebResponse().getContentAsString();
         }
 
-        assertTrue(out, out.contains("tests view"));
-        assertTrue(out, out.contains("test_project"));
-        assertTrue(out, out.contains("1 failure"));
+        assertTrue(out.contains("tests view"), out);
+        assertTrue(out.contains("test_project"), out);
+        assertTrue(out.contains("1 failure"), out);
     }
 }

@@ -18,17 +18,25 @@ import java.util.Arrays;
 import org.htmlunit.html.HtmlButton;
 import org.htmlunit.html.HtmlForm;
 import org.htmlunit.html.HtmlPage;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.Issue;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class SectionedViewTest {
+@WithJenkins
+class SectionedViewTest {
 
-    public @Rule JenkinsRule j = new JenkinsRule();
+    private JenkinsRule j;
 
-    @Test @Issue("JENKINS-37174")
-    public void doNotEnumerateItemsRepeatedly() throws Exception {
+    @BeforeEach
+    void beforeEach(JenkinsRule rule) {
+        j = rule;
+    }
+
+    @Test
+    @Issue("JENKINS-37174")
+    void doNotEnumerateItemsRepeatedly() throws Exception {
         FreeStyleProject show = j.createFreeStyleProject();
         FreeStyleProject hide = j.createFreeStyleProject();
 
@@ -64,8 +72,9 @@ public class SectionedViewTest {
         verify(trvs, times(1)).getItems(any(ItemGroup.class));
     }
 
-    @Test @Issue("JENKINS-44987")
-    public void htmlUI() throws Exception {
+    @Test
+    @Issue("JENKINS-44987")
+    void htmlUI() throws Exception {
         String MARKUP = "<div><b><a href=\"adsf\" rel=\"nofollow noopener noreferrer\">LVS</a></b></div>";
 
         j.jenkins.setMarkupFormatter(new RawHtmlMarkupFormatter(false));
@@ -81,7 +90,7 @@ public class SectionedViewTest {
     }
 
     @Test
-    public void textSectionNoneStyleDoesNotRenderAlert() throws Exception {
+    void textSectionNoneStyleDoesNotRenderAlert() throws Exception {
         SectionedView sw = new SectionedView("sw");
         j.jenkins.addView(sw);
         DescribableList<SectionedViewSection, Descriptor<SectionedViewSection>> sections =
@@ -101,8 +110,9 @@ public class SectionedViewTest {
         assertThat(content, containsString("jenkins-alert jenkins-alert-info"));
     }
 
-    @Test @Issue("JENKINS-58418")
-    public void jobWithDotInNameCollision() throws Exception {
+    @Test
+    @Issue("JENKINS-58418")
+    void jobWithDotInNameCollision() throws Exception {
         j.createFreeStyleProject("foo.bar");
         j.createFreeStyleProject("foo_bar");
         SectionedView sw = new SectionedView("sw");
@@ -123,4 +133,3 @@ public class SectionedViewTest {
         assertThat(responsePage.getWebResponse().getStatusCode(), is(200));
     }
 }
-
