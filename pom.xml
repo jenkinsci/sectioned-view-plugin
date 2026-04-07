@@ -4,7 +4,7 @@
     <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>5.18</version>
+    <version>5.28</version>
     <relativePath />
   </parent>
 
@@ -12,11 +12,11 @@
   <packaging>hpi</packaging>
   <name>Sectioned View Plugin</name>
   <version>${revision}${changelist}</version>
-  <url>http://wiki.jenkins-ci.org/display/JENKINS/Sectioned+View+Plugin</url>
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/Sectioned+View+Plugin</url>
   <licenses>
     <license>
       <name>The MIT license</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <url>https://www.opensource.org/licenses/mit-license.php</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -50,6 +50,7 @@
     <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
     <!-- TODO fix existing violations -->
     <spotbugs.threshold>High</spotbugs.threshold>
+    <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
   </properties>
 
   <dependencyManagement>
