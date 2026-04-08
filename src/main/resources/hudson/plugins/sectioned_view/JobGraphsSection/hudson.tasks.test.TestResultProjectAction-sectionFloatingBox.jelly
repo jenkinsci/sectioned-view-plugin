@@ -27,11 +27,13 @@ THE SOFTWARE.
   <j:set var="tr" value="${action.lastTestResultAction}" />
   <j:if test="${tr.previousResult!=null}">
     <!-- at least two data points are required for a trend report -->
-    <div class="test-trend-caption">
-      ${%Test Result Trend}
-    </div>
-    <div>
-      <img src="${relativeUrl}${action.urlName}/trend?width=${width}&amp;height=${height}" lazymap="${relativeUrl}${action.urlName}/trendMap?width=${width}&amp;height=${height}&amp;rel=${relativeUrl}" alt="[Test result trend chart]"/>
+    <div style="float: left;">
+      <div class="test-trend-caption">
+        ${%Test Result Trend}
+      </div>
+      <div>
+        <img src="${relativeUrl}${action.urlName}/trend?width=${width}&amp;height=${height}" lazymap="${relativeUrl}${action.urlName}/trendMap?width=${width}&amp;height=${height}&amp;rel=${relativeUrl}" alt="[Test result trend chart]"/>
+      </div>
     </div>
   </j:if>
 </j:jelly>

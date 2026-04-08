@@ -33,12 +33,10 @@ THE SOFTWARE.
   </j:if>
   <div class="sectioned-view-graph-container">
     <j:forEach var="job" items="${sectionItems}">
-      <div class="sectioned-view-graph"><b>${job.fullDisplayName}</b> (<a href="${job.shortUrl}">view</a>)</div>
+      <div class="sectioned-view-graph"><b>${job.fullDisplayName}</b> (<a href="${h.getRelativeLinkTo(job)}">view</a>)</div>
       <div>
         <j:forEach var="a" items="${job.allActions}">
-          <div style="float: left;">
-            <sv:graph action="${a}" width="250" height="100" relativeUrl="${job.shortUrl}"/>
-          </div>
+          <sv:graph action="${a}" width="250" height="100" relativeUrl="${h.getRelativeLinkTo(job)}"/>
         </j:forEach>
         <div style="clear: both;"></div>
       </div>

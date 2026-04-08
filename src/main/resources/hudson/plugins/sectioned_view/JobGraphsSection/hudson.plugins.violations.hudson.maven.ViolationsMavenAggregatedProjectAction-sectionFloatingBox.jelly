@@ -35,11 +35,13 @@ THE SOFTWARE.
   <j:set var="report" value="${action.violationsAction.findReport()}"/>
   <v:reporttable report="${report}" icon="false"/>
   <j:if test="${report != null}">
-    <div class="test-trend-caption">
-      ${%Violations Trend}
+    <div style="float: left;">
+      <div class="test-trend-caption">
+        ${%Violations Trend}
+      </div>
+      <a href="${relativeUrl}${action.urlName}/">
+        <img src="${relativeUrl}${action.urlName}/graph?width=${width}&amp;height=${height}" />
+      </a>
     </div>
-    <a href="${relativeUrl}${action.urlName}/">
-      <img src="${relativeUrl}${action.urlName}/graph?width=${width}&amp;height=${height}" />
-    </a>
   </j:if>
 </j:jelly>
