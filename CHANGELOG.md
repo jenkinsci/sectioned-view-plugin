@@ -1,5 +1,16 @@
 # Changelog
 
+### Release 1.32 - 08 Apr 2026
+
+* Fix broken job links for multibranch pipeline branches in JobGraphsSection and TestResultViewSection
+* Fix empty graph divs rendered for actions without matching templates in JobGraphsSection
+* Fix security issues: bitwise operator, regex validation, deprecated API
+* Fix NPE when renaming jobs with null jobNames
+* Migrate tests to JUnit Jupiter ([PR #83](https://github.com/jenkinsci/sectioned-view-plugin/pull/83))
+* Bump org.jenkins-ci.plugins:plugin from 5.18 to 6.2138 ([PR #82](https://github.com/jenkinsci/sectioned-view-plugin/pull/82))
+* Bump io.jenkins.tools.bom from 5085 to 5473 ([PR #80](https://github.com/jenkinsci/sectioned-view-plugin/pull/80))
+* Bump git-changelist-maven-extension from 1.8 to 1.13 ([PR #81](https://github.com/jenkinsci/sectioned-view-plugin/pull/81))
+
 ### Release 1.31 - 03 Apr 2026
 
 * UI refresh: apply Jenkins design system styling (jenkins-table, jenkins-card, jenkins-alert) ([PR #76](https://github.com/jenkinsci/sectioned-view-plugin/pull/76))
