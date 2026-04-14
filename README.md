@@ -1,7 +1,7 @@
 # Jenkins Sectioned View Plugin
 
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/sectioned-view.svg)](https://plugins.jenkins.io/sectioned-view)
-[![Changelog](https://img.shields.io/github/v/tag/jenkinsci/sectioned-view-plugin?label=changelog)](https://github.com/jenkinsci/sectioned-view-plugin/blob/master/CHANGELOG.md)
+[![Changelog](https://img.shields.io/github/v/tag/jenkinsci/sectioned-view-plugin?label=changelog)](https://github.com/jenkinsci/sectioned-view-plugin/releases)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/sectioned-view.svg?color=blue)](https://plugins.jenkins.io/sectioned-view)
 [![Contributors](https://img.shields.io/github/contributors/jenkinsci/sectioned-view-plugin.svg)](https://github.com/jenkinsci/sectioned-view-plugin/graphs/contributors)
 
