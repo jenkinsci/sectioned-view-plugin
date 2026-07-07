@@ -51,11 +51,13 @@ import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest2;
 
 public class ListViewSection extends SectionedViewSection {
 
-    private DescribableList<ListViewColumn, Descriptor<ListViewColumn>> columns;
+    private DescribableList<ListViewColumn, Descriptor<ListViewColumn>> columns =
+            new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
 
     @DataBoundConstructor
     public ListViewSection(String name, Width width, Positioning alignment) {
@@ -64,6 +66,21 @@ public class ListViewSection extends SectionedViewSection {
 
     public Iterable<ListViewColumn> getColumns() {
         return columns;
+    }
+
+    @DataBoundSetter
+    public void setColumns(List<ListViewColumn> columns) throws IOException {
+        if (this.columns == null) {
+            this.columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
+        }
+        this.columns.replaceBy(columns);
+    }
+
+    protected Object readResolve() {
+        if (columns == null) {
+            columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
+        }
+        return this;
     }
 
     @SuppressFBWarnings(value = "NP_NONNULL_PARAM_VIOLATION", justification = "TODO needs triage")
