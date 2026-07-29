@@ -51,7 +51,6 @@ import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest2;
 
 public class ListViewSection extends SectionedViewSection {
@@ -68,7 +67,6 @@ public class ListViewSection extends SectionedViewSection {
         return columns;
     }
 
-    @DataBoundSetter
     public void setColumns(List<ListViewColumn> columns) throws IOException {
         if (this.columns == null) {
             this.columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
