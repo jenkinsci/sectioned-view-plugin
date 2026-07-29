@@ -2,11 +2,18 @@ package hudson.plugins.sectioned_view;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.stringContainsInOrder;
+import static io.jenkins.plugins.casc.misc.Util.getJenkinsRoot;
+import static io.jenkins.plugins.casc.misc.Util.toYamlString;
 
 import hudson.views.ListViewColumn;
+import io.jenkins.plugins.casc.ConfigurationContext;
+import io.jenkins.plugins.casc.ConfiguratorRegistry;
 import io.jenkins.plugins.casc.misc.ConfiguredWithCode;
 import io.jenkins.plugins.casc.misc.JenkinsConfiguredWithCodeRule;
 import io.jenkins.plugins.casc.misc.junit.jupiter.WithJenkinsConfiguredWithCode;
+import io.jenkins.plugins.casc.model.CNode;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -44,5 +51,19 @@ class ListViewSectionJCasCTest {
         assertThat(columnClassNames(firstSection(r)), contains(
                 "StatusColumn", "WeatherColumn", "JobColumn", "LastSuccessColumn",
                 "LastFailureColumn", "LastDurationColumn", "BuildButtonColumn"));
+    }
+
+    @Test
+    @ConfiguredWithCode("columns.yaml")
+    @Issue("JENKINS-59551")
+    void exportRoundTripsColumns(JenkinsConfiguredWithCodeRule r) throws Exception {
+        ConfiguratorRegistry registry = ConfiguratorRegistry.get();
+        ConfigurationContext context = new ConfigurationContext(registry);
+        CNode viewsNode = getJenkinsRoot(context).get("views");
+        String exported = toYamlString(viewsNode);
+
+        assertThat(exported, containsString("listViewSection"));
+        assertThat(exported, stringContainsInOrder("columns",
+                "status", "jobName", "lastSuccess", "lastFailure", "lastDuration"));
     }
 }
