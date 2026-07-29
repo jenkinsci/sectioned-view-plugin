@@ -2,10 +2,12 @@ package hudson.plugins.sectioned_view;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.stringContainsInOrder;
 import static io.jenkins.plugins.casc.misc.Util.getJenkinsRoot;
 import static io.jenkins.plugins.casc.misc.Util.toYamlString;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import hudson.views.ListViewColumn;
 import io.jenkins.plugins.casc.ConfigurationContext;
@@ -65,5 +67,15 @@ class ListViewSectionJCasCTest {
         assertThat(exported, containsString("listViewSection"));
         assertThat(exported, stringContainsInOrder("columns",
                 "status", "jobName", "lastSuccess", "lastFailure", "lastDuration"));
+    }
+
+    @Test
+    @ConfiguredWithCode("jobnames.yaml")
+    @Issue("JENKINS-59551")
+    void jobNamesAreBoundFromYaml(JenkinsConfiguredWithCodeRule r) {
+        ListViewSection section = firstSection(r);
+        assertThat(section.getJobNames(), containsInAnyOrder("Job Alpha", "Job Beta"));
+        assertTrue(section.getJobNames().contains("job alpha"),
+                "job name lookup must stay case-insensitive");
     }
 }
