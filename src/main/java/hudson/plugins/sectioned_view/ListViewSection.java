@@ -77,6 +77,7 @@ public class ListViewSection extends SectionedViewSection {
     }
 
     protected Object readResolve() {
+        super.readResolve();
         if (columns == null) {
             columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
         }
