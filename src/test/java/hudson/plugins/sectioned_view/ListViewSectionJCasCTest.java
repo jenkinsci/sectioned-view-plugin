@@ -36,4 +36,13 @@ class ListViewSectionJCasCTest {
                 "StatusColumn", "JobColumn", "LastSuccessColumn",
                 "LastFailureColumn", "LastDurationColumn"));
     }
+
+    @Test
+    @ConfiguredWithCode("no-columns.yaml")
+    @Issue("JENKINS-59551")
+    void omittedColumnsFallBackToDefaults(JenkinsConfiguredWithCodeRule r) {
+        assertThat(columnClassNames(firstSection(r)), contains(
+                "StatusColumn", "WeatherColumn", "JobColumn", "LastSuccessColumn",
+                "LastFailureColumn", "LastDurationColumn", "BuildButtonColumn"));
+    }
 }

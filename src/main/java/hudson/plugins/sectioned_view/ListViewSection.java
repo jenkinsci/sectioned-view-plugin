@@ -57,7 +57,7 @@ import org.kohsuke.stapler.StaplerRequest2;
 public class ListViewSection extends SectionedViewSection {
 
     private DescribableList<ListViewColumn, Descriptor<ListViewColumn>> columns =
-            new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
+            new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP, getDefaultColumns());
 
     @DataBoundConstructor
     public ListViewSection(String name, Width width, Positioning alignment) {
@@ -79,7 +79,7 @@ public class ListViewSection extends SectionedViewSection {
     protected Object readResolve() {
         super.readResolve();
         if (columns == null) {
-            columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP);
+            columns = new DescribableList<ListViewColumn, Descriptor<ListViewColumn>>(Saveable.NOOP, getDefaultColumns());
         }
         return this;
     }

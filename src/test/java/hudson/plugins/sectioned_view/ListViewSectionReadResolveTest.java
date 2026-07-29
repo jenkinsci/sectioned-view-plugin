@@ -1,6 +1,7 @@
 package hudson.plugins.sectioned_view;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -9,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import hudson.plugins.sectioned_view.SectionedViewSection.Positioning;
 import hudson.plugins.sectioned_view.SectionedViewSection.Width;
+import java.util.ArrayList;
+import java.util.List;
 import jenkins.model.Jenkins;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,5 +53,23 @@ class ListViewSectionReadResolveTest {
 
         ListViewSection loaded = (ListViewSection) Jenkins.XSTREAM2.fromXML(legacyXml);
         assertDoesNotThrow(() -> loaded.getItems(j.jenkins));
+    }
+
+    @Test
+    @Issue("JENKINS-59551")
+    void legacyConfigWithoutColumnsGetsDefaultColumns() throws Exception {
+        ListViewSection original = new ListViewSection("lvs", Width.THIRD, Positioning.CENTER);
+        String xml = Jenkins.XSTREAM2.toXML(original);
+        String legacyXml = xml.replaceFirst("(?s)<columns>.*?</columns>|<columns/>", "");
+        assertThat("setup: columns element must be stripped", legacyXml, not(containsString("<columns")));
+
+        ListViewSection loaded = (ListViewSection) Jenkins.XSTREAM2.fromXML(legacyXml);
+        List<String> names = new ArrayList<>();
+        for (hudson.views.ListViewColumn c : loaded.getColumns()) {
+            names.add(c.getClass().getSimpleName());
+        }
+        assertThat(names, contains(
+                "StatusColumn", "WeatherColumn", "JobColumn", "LastSuccessColumn",
+                "LastFailureColumn", "LastDurationColumn", "BuildButtonColumn"));
     }
 }
