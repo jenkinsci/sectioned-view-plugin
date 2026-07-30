@@ -38,7 +38,9 @@ import hudson.views.ViewJobFilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -150,6 +152,15 @@ public abstract class SectionedViewSection implements ExtensionPoint, Describabl
 
     public boolean contains(TopLevelItem item, ItemGroup<? extends TopLevelItem> itemGroup) {
         return jobNames.contains(item.getRelativeNameFrom(itemGroup));
+    }
+
+    public Set<String> getJobNames() {
+        return Collections.unmodifiableSet(jobNames);
+    }
+
+    public void setJobNames(Collection<String> jobNames) {
+        this.jobNames.clear();
+        this.jobNames.addAll(jobNames);
     }
 
     protected Object readResolve() {

@@ -1,0 +1,9 @@
+jenkins:
+  views:
+    - sectioned:
+        name: "test"
+        sections:
+          - listViewSection:
+              name: "section-one"
+              width: FULL
+              alignment: CENTER

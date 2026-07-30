@@ -1,0 +1,15 @@
+jenkins:
+  views:
+    - sectioned:
+        name: "test"
+        sections:
+          - listViewSection:
+              name: "section-one"
+              width: FULL
+              alignment: CENTER
+              columns:
+                - "status"
+                - "jobName"
+                - "lastSuccess"
+                - "lastFailure"
+                - "lastDuration"
