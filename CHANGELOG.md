@@ -1,5 +1,16 @@
 # Changelog
 
+### Release 1.33 - 28 Aug 2026
+
+* [JENKINS-59551](https://issues.jenkins.io/browse/JENKINS-59551) Add support for configuring list section columns through JCasC ([PR #89](https://github.com/jenkinsci/sectioned-view-plugin/pull/89))
+* Allow configuring section job names through JCasC ([PR #89](https://github.com/jenkinsci/sectioned-view-plugin/pull/89))
+* Default list section columns when none are configured ([PR #89](https://github.com/jenkinsci/sectioned-view-plugin/pull/89))
+* Avoid double column binding on view config save ([PR #89](https://github.com/jenkinsci/sectioned-view-plugin/pull/89))
+* Add release documentation and link changelog badge to GitHub Releases
+* Bump org.jenkins-ci.plugins:plugin from 6.2138 to 6.2152 ([PR #86](https://github.com/jenkinsci/sectioned-view-plugin/pull/86))
+* Bump org.jenkins-ci.plugins:plugin from 6.2152 to 6.2211 ([PR #90](https://github.com/jenkinsci/sectioned-view-plugin/pull/90))
+* Bump org.jenkins-ci.plugins:plugin from 6.2211 to 6.2221 ([PR #91](https://github.com/jenkinsci/sectioned-view-plugin/pull/91))
+
 ### Release 1.32 - 08 Apr 2026
 
 * Fix broken job links for multibranch pipeline branches in JobGraphsSection and TestResultViewSection
